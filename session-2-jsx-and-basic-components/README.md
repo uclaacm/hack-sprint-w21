@@ -1,8 +1,10 @@
 # Hacksprint Session 2: Intro to JSX and Basic Components
 
 **Date**: January 20, 2021
+
 **Location**: Zoom
-**Teachers**: [Nareh Agazaryan](https://github.com/nareha) [Miles Wu](https://github.com/milesswu)
+
+**Teachers**: [Nareh Agazaryan](https://github.com/nareha), [Miles Wu](https://github.com/milesswu)
 
 ## Resources
 
@@ -11,8 +13,8 @@
 
 ## What we'll be learning today
 
-- [Components in React Native]
-- [Intro to JSX]
+- [Components in React Native]()
+- [Intro to JSX]()
 - [View Only Components](#view-only-components)
 - [Third Party Components](#third-party-components)
 
