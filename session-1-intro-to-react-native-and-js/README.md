@@ -31,7 +31,7 @@
   - [Functions](#functions)
   - [Conditionals](#conditionals)
   - [Objects](#objects)
-  - [Conclusion](#conclusion)
+  - [Conclusion & Resources](#conclusion-&-resources)
 
 Welcome to the very first session of Hack Sprint during Winter '21! If you are here for the instructions for how to create your very own React Native app using Expo, feel free to hop straight to the [Creating Your Own React Native App](#creating-your-own-react-native-app) section.
 
@@ -45,39 +45,39 @@ Before jumping right into React Native, it's worth it to provide context for why
 
 ### Native Mobile Development
 
-**Native mobile development** is development using tools specific to each platform (iOS, Android, etc.). For example, native development of iOS apps use either Objective-C and Swift (created later on) as their native programming language, and Android apps require the use of either Java or Kotlin (also added later on). **Native apps**, or apps built using native development, are installed directly onto each mobile device. The way you can tell if an app is native is if it is downloaded from the platform's propriety distribution service, or "app store". For iOS, this is the App Store, and for Android, this is Google Play.
+**Native mobile development** is development using tools specifically made for each platform (iOS, Android, etc.). For example, native development of iOS apps use either Objective-C and Swift (created later on) as their native programming language, and Android apps require the use of either Java or Kotlin (also added later on). **Native apps**, or apps built using native development, are installed directly onto each mobile device. The way you can tell if an app is native is if it is downloaded from the platform's propriety distribution service, or "app store". For iOS, this is the App Store, and for Android, this is Google Play.
 
 At the beginning of mobile development, native development was the only way to create native apps for each platform. This is all fine and dandy, but this means that we have to learn *two separate languages/technologies* in order to develop both iOS and Android apps. On top of this, both of these apps have to be *written from scratch* each time. *And*, if I wanted to add my app onto the Windows phone ecosystem (I would never do this, but stick with me for demonstration purposes), I would have to learn *another* language/technology, because Windows apps are created using C/C++. All of this work I have to do to make sure everyone can use my app no matter what platform they're on is *way* over my pay grade!! Well actually, I'm not getting paid at all, but if I was, this would be above that.
 
 ![native development is pain](./images/native-pain.jpg)
 
-What if there existed some magic translation device that was able to take code we've written only *once* and have it translate to each platform's native code automatically, without us having to do any additional work? Then, we'd only have to learn one language/technology across all platforms. Wait... across all platforms... ~~a~~cross ~~all~~ platform~~s~~... cross-platorm!
+What if there existed some magic translation device that was able to take code we've written only *once* and have it translate to each platform's native code automatically, without us having to do any additional work? Then, we'd only have to learn one language/technology across all platforms. Wait... across all platforms... ~~a~~cross ~~all~~ platform~~s~~... cross-platform!
 
 ### Cross-Platform/Hybrid Mobile Development
 
-**Cross platform development** was created later on, and it was largely motivated by the previously mentioned pain point of having to learn separate language/technologies for each platform. Using cross-platform development, we're now able to build apps across multiple platforms *using one codebase*. Usually, but not all the time, cross-platform solutions involve a *hybrid* approach, where the development process is part-mobile, part-web. There are many cross-platform tools out there, and although they are implemented in different ways, they are all solutions to the same drawbacks behind native development. [**React Native**](https://reactnative.dev/), created by Facebook, is by far the current winner in terms of popularity, but other cross-platform tools you may have heard of are [**Ionic**](https://ionicframework.com/), [**Xamarin**](https://dotnet.microsoft.com/apps/xamarin) (backed by Microsoft), and [**Flutter**](https://flutter.dev/) (backed by Google).
+**Cross-platform development** was created later on, and it was largely motivated by the previously mentioned pain point of having to learn separate language/technologies for each platform. Using cross-platform development, we're now able to build apps across multiple platforms *using one codebase*. Usually, but not all the time, cross-platform solutions involve a *hybrid* approach, where the development process is part-mobile, part-web. There are many cross-platform tools out there, and although they are implemented in different ways, they are all solutions to the same drawbacks behind native development. [**React Native**](https://reactnative.dev/), created by Facebook, is by far the current winner in terms of popularity, but other cross-platform tools you may have heard of are [**Ionic**](https://ionicframework.com/), [**Xamarin**](https://dotnet.microsoft.com/apps/xamarin) (backed by Microsoft), and [**Flutter**](https://flutter.dev/) (backed by Google).
 
 ### React Native
 
-Finally, we arrive at React Native - all this suspense was killing me! **React Native** is a cross-platform tool used to build *native* mobile apps JavaScript. This distinction is important - React Native is able to still make native apps because what it does behind the scenes is translate the JavaScript code into the *native* code for the platform it is running on. For iOS, this is Objective-C, and for Android, this is Java. React Native is open-source and backed by Facebook, and it has a ton of community support, meaning you'll have an easier time finding support for any issues you may be running into. For more information on React Native, feel free to checkout the official website [here](https://reactnative.dev/).
+Finally, we arrive at React Native - all this suspense was killing me! **React Native** is a cross-platform tool used to build *native* mobile apps using JavaScript. This distinction is important - React Native is able to still make native apps because what it does behind the scenes is translate the JavaScript code into the *native* code for the platform it is running on. For iOS, this is Objective-C, and for Android, this is Java. React Native is open-source and backed by Facebook, and it has a ton of community support, meaning you'll have an easier time finding answers for any issues you may be running into. For more information on React Native, feel free to checkout the official website [here](https://reactnative.dev/).
 
-Although React Native is a novel tool that fixes some issues with pure native development, there has to be pros and cons associated with using it, or else literally every mobile developer would be using React Native or some other cross-platform tool. First and foremost, of course, React Native is "learn once, write anywhere". Due to its cross-platform nature, once you write JavaScript code for your app, it is able to be run anywhere after being translated into the relevant platform. As a result, it becomes faster to get your app off of its feet, and it's easier to build for multiple platforms. Finally, the JavaScript syntax has an (arguably) lower learning curve compared to languages like Swift and Java, so if you're starting as a complete beginner, this may be where to look.
+Although React Native is a novel tool that fixes some issues with pure native development, there has to be pros and cons associated with using it, or else every mobile developer would be using React Native or some other cross-platform tool. For the pros, of course, React Native is "learn once, write anywhere". Due to its cross-platform nature, once you write JavaScript code for your app, it is able to be run anywhere after being translated into the relevant platform. As a result, it becomes faster to get your app off of its feet, and it's easier to build for multiple platforms. This makes it a desirable choice if you're a startup just getting started, or a developer just making apps for fun. The JavaScript syntax also has an (arguably) lower learning curve compared to languages like Swift and Java, so if you're starting as a complete beginner, this may be where to look.
 
-*But*, with every yin, there must be a yang. First and foremost, React Native apps have slightly worse performance compared to native apps written in native code, because React Native first has to take some time translating all of the JavaScript code. *Generally*, this performance decrease is not visible to the user of the mobile app, because it is very slight, but nonetheless it is still there. There are some restricted user interface (UI) capabilities when using React Native. For most use cases, React Native can handle UI fine. However, if your app becomes more and more intense in the UI it uses (i.e. animatioins, background stuff running all the time), the performance difference starts to show more clearly between React Native and native development. Additionally, because React Native acts as a layer above native development, it acts as an outsider tapping into iOS and Android. Because iOS and Android are very attentive to privacy, some capabilities cannot be accessed by React Native and are proprietary functions of the platforms themselves. For example, iOS has a platform-specific techology called [ARKit](https://developer.apple.com/augmented-reality/), which is a bunch of code that utilizes iPhone's AR sensors. If you foresee yourself making an app around something like this, then native app development might be the answer for you instead. Additionally, if your app needs to use the camera, you will have to jump into writing native code to handle that, because iOS does not make that functionality available to React Native. Finally, React Native is dependent on Facebook. Although React Native is extremely popular now with amazing community support, so it's highly unlikely that Facebook will take it down out of nowhere, this risk is present nonetheless. Once React Native goes down, all projects done with React Native will no longer be supported, which is Not Very Cool™. If you're interested, this [Medium article](https://medium.com/mop-developers/mobile-app-development-react-native-vs-native-ios-android-49c5c168045b) highlights more in depth the tradeoffs between using React Native and native development.
+*But*, with every yin, there must be a yang. First and foremost, React Native apps have slightly worse performance compared to native apps written in native code, because React Native first has to take some time translating all of the JavaScript code. *Generally*, this performance decrease is not visible to the user of the mobile app, because it is very slight, but nonetheless it is still there. There are some restricted user interface (UI) capabilities when using React Native. For most use cases, React Native can handle UI fine. However, if your app becomes more and more intense in the UI it uses (i.e. animations, background stuff running all the time), the performance difference starts to show more clearly between React Native and native development. Additionally, because React Native acts as a layer above native development, it acts as an outsider tapping into iOS and Android. Because iOS and Android are very attentive to privacy, some capabilities cannot be accessed by React Native and are proprietary functions of the platforms themselves. For example, iOS has a platform-specific techology called [ARKit](https://developer.apple.com/augmented-reality/), which is a bunch of code that utilizes iPhone's AR sensors. React Native can't use this technology, so if you foresee yourself making an app around something like this, then native app development might be the answer for you instead. Additionally, if your app needs to use the camera, you will have to jump into writing native code to handle that, because iOS does not make that functionality available to React Native. Finally, React Native is dependent on Facebook. Although React Native is extremely popular now with amazing community support, so it's highly unlikely that Facebook will take it down out of nowhere, this risk is present nonetheless. Once React Native goes down, all projects done with React Native will no longer be supported, which is Not Very Cool™. If you're interested, this [Medium article](https://medium.com/mop-developers/mobile-app-development-react-native-vs-native-ios-android-49c5c168045b) highlights more in depth the tradeoffs between React Native and native development.
 
 ## Creating Your Own React Native App
 
-Now, let's talk about how you can create your very own React Native app! There are two main ways of accomplishing this. One way is by using the React Native build tools directly. This, however, has a high learning curve, because it hides nothing from people of the complexity of React Native development, and it will probably be information overload for someone just getting started. Because of this, we *strongly* recommend using Expo to work with React Native, because it only exposes to us what is immediately necessary for development, while Expo takes care of the nitty gritty for us behind the scenes.
+Now, let's talk about how you can create your very own React Native app! There are two main ways of accomplishing this. One way is by using the React Native build tools directly. This, however, has a high learning curve, because it hides nothing from people about the complexity of React Native development, and it will probably be information overload for someone just getting started. Because of this, we *strongly* recommend using Expo to work with React Native, because it only exposes to us what is immediately necessary for development, while Expo takes care of the nitty gritty for us behind the scenes.
 
 ### What is Expo?
 
-Expo is a set of tools and services built around React Native. It is an interface that provides us with many features provided to us right out of the box. Using Expo, all we have to do to create an app is run a few commands in the terminal, and Expo takes care of installing all of the necessary code and files we need to get started.
+Expo is a set of tools and services built around React Native. It is an interface that provides us with many features right out of the box. Using Expo, all we have to do to create an app is run a few commands in the terminal, and Expo takes care of installing all of the necessary code and files we need to get started.
 
 For a comprehensive guide on how to install Expo + the necessary software, and how to create and run a React Native app afterwards, we highly recommend using the [Get Started](https://docs.expo.io/get-started/installation/) guide on the Expo website, and following at least the "Installation", "Create a new app", and "Errors and debugging" sections.
 
 ## Intro to JavaScript
 
-Now that we know from a high level what React Native is all about, let's begin dissecting it by learning more about what makes it all tick: JavaScript! **JavaScript**, as you may already know, is a programming language used primarily in web development. Most browsers have support for running in the browser, and React, the web development tool from which React Native is built off of, is written in and JavaScript. The goal of this workshop is to give you the fundamental necessities for writing React Native apps using JavaScript.
+Now that we know from a high level what React Native is all about, let's begin dissecting it by learning more about what makes it all tick: JavaScript! **JavaScript**, as you may already know, is a programming language used primarily in web development. Most browsers have support for running in the browser, and React, the web development tool from which React Native is built off of, is written in JavaScript. Because of this, the goal for the rest of the workshop is to teach you the necessary fundamentals for writing React Native apps using JavaScript.
 
 ### Console
 
@@ -85,9 +85,9 @@ The main way to interact with JavaScript is by using something known as the **co
 
 <img src="./images/console.png" alt="image of google chrome console" style="zoom:50%;" />
 
-The **console** gives us a convenient way to run JavaScript in the browser. After entering valid JavaScript code, we can immediately see the results produced by it. We also are able to cycle through the history of lines we've entered previously using the up and down arrow keys.
+The **console** gives us a convenient way to run JavaScript in the browser. After entering valid JavaScript code, we can immediately see the results produced by it. We are also able to cycle through the history of lines we've entered previously using the up and down arrow keys.
 
-Google Chrome provides the Developer Tools console (shown above), which is accessible by right clicking on any part of the page and selecting "Inspect", then going to the "Console" tag of the window that pops up. Other commly used browsers like Firefox and Safari also have their own consoles in the browser (Safari requires some extra steps to enable the console to be enabled. See [here](https://balsamiq.com/support/faqs/browserconsole/#:~:text=To%20do%20that%2C%20go%20into,shortcut%20Option%20%2B%20%E2%8C%98%20%2B%20C.) for how to open the console for each browser).
+Google Chrome provides the Developer Tools console (shown above), which is accessible by right clicking on any part of the page and selecting "Inspect", then going to the "Console" tag of the window that pops up. Other commonly used browsers like Firefox and Safari also have their own consoles in the browser (Safari requires some extra steps to enable the console to be enabled. See [here](https://balsamiq.com/support/faqs/browserconsole/#:~:text=To%20do%20that%2C%20go%20into,shortcut%20Option%20%2B%20%E2%8C%98%20%2B%20C.) for how to open the console for each browser).
 
 Although the Chrome DevTools console displays the result to us after each line, this is just an added feature of Chrome DevTools, even though it's not actually "printing" the value. In order to explicitly log values in JavaScript, we use `console.log()`, where the value we want to print out goes inside the parentheses.
 
@@ -107,7 +107,7 @@ comment
 
 ### Types, Values, and Operators
 
-In JavaScript, and kind of "information" takes the form of a **value**. There are several basic **types**: numbers, booleans, and strings.
+In JavaScript, any kind of "information" is a **value**. There are several basic **types**: numbers, booleans, and strings.
 
 #### Numbers
 
@@ -139,13 +139,13 @@ We can perform operations between numbers using *arithmetic operators*. These op
 
 Note: the `>` and `<` indicate what you input into the console and what the console spits out, respectively. 
 
-We can also perform comparison between numbers using *comparative operators*. These comparisons will result in either `true` or `false` (booleans) depending on whether the comparison is a true statement.
+We can also perform comparison between numbers using *comparative operators*. These comparisons will result in either `true` or `false` (booleans) depending on whether the comparison is a true statement or not.
 
 ``` javascript
 > 6 === 8  // equality check
 < false
 
-> 6 !== 8  // inequalty check
+> 6 !== 8  // inequality check
 < true
 
 > 6 < 8    // less than
@@ -161,7 +161,7 @@ We can also perform comparison between numbers using *comparative operators*. Th
 < false
 ```
 
-Note: If you are coming from a background in another programming language, like C++, Java, or Python, you may be confused as to why we are using the triple equals `===` and `!==` instead of `==` or `!=`, as it would be in these other languages. The short answer is that `===` and `!==` are different from `==` or `!=` in JavaScript. The `===` and `!==` more like the `==` and `!=` from these other languages, and for all intents and purposes, we recommend you always use them over the  `==` and `!=` in JavaScript. If you want a deeper look into exactly what the difference is, [this page](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness) explains the distinction more clearly.
+Note: If you are coming from a background in another programming language, like C++, Java, or Python, you may be confused as to why we are using the triple equals `===` and `!==` instead of `==` or `!=`, as it would be in these other languages. The short answer is that `===` and `!==` are different from `==` or `!=` in JavaScript. The `===` and `!==` act more like the `==` and `!=` from these other languages, and for all intents and purposes, we recommend you always use them over the  `==` and `!=` in JavaScript. If you want a deeper look into exactly what the difference is, [this page](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness) explains the distinction more clearly.
 
 #### Strings
 
@@ -175,7 +175,7 @@ The following are all examples of strings:
 '2 weeks of break is never long enough'
 ```
 
-We can perform *string concatenation* on two separate strings to form one string using the `+` operator:
+We can perform *string concatenation* on two separate strings to combine them into one string using the `+` operator:
 
 ```javascript
 > 'I love ' + 'React Native!!!'
@@ -184,17 +184,17 @@ We can perform *string concatenation* on two separate strings to form one string
 
 Note here that the console in Chrome DevTools will give the string back in double quotes no matter how you formatted it.
 
-One cool thing (or painful thing) about string concatenation is that only one of the values you are concatenating have to be an actual string. Then, everything gets treated as a string.
+One cool thing (or painful thing, depending on who you ask) about string concatenation is that only one of the values you are concatenating have to be an actual string. Then, everything gets treated as a string before combining it all together.
 
 ``` javascript
 > 'My favorite number is ' + 7
 < "My favorite number is 7"
 
-> 3 + '5';
+> 3 + '5'
 < "35"
 ```
 
-Additionally, we have the same comparison operators from numbers available to us. The `===` and `!==` comparisons check if the strings are exactly the same (case-sensitive). The `<` , `>`, `<=`, and `>=` operators compare the strings in alphanumeric order.
+Additionally, we have the same comparison operators from numbers available to us. The `===` and `!==` comparisons check if the strings are exactly the same. The `<` , `>`, `<=`, and `>=` operators compare the strings in alphanumeric order. All of these comparison checks are case-*sensitive*.
 
 ``` javascript
 > 'Eugene' === 'Eugene'
@@ -276,11 +276,11 @@ Note: we need the parentheses wrapped around `3 > 4` here because we want the NO
 
 ### Variables
 
-Having values is cool, but sometimes we want to be able to store this value in so that we can can use them over and over again, or perform some computation using them later. It would also help if we could give these values names that describe more clearly what they are.
+Having values is cool, but sometimes we want to be able to store this value somewhere so that we can can use them over and over again, or perform some computation using them later. It would also help if we could give these values names that describe more clearly what they are.
 
-For these use cases, we would use a **variable**! Variables give us a way to refer to a certain value using a self-defined name. In our previous example, we would declare a variable named `age` , which we would then assign to `20`.
+For these use cases, we would use a **variable**! Variables give us a way to refer to a certain value using a self-defined name, and maintain access to that same value. In our previous example, we would declare a variable named `age` , which we would then assign to `20`.
 
-To create and assign a variable, we use either `let` or `const`, then the name that we want to give the variable.
+To create and assign a variable, we use either `let` or `const`, then the name that we want to give the variable, then the value after an `=` sign.
 
 ``` javascript
 let age = 20;
@@ -298,7 +298,7 @@ const pi = 3.14;
 < Uncaught TypeError: Assignment to constant variable.
 ```
 
-Because constant variables cannot be reassigned after being assigned for the first time, we should make any variable that we know for sure will never change `const`. For example, the first month will always be January, so `const firstMonth = 'January';` is a good use of `const`. One good rule of thumb when working with variables is first assigning any variable (unless you're sure it will change) to  `const` at first. This ensures that nothing is able to change its value unexpectedly in the code later on. When it becomes apparent that we need to change the value of the variable in the future, we can then decide to promote it to `let` so that it can be reassigned.
+Because constant variables cannot be reassigned after being assigned for the first time, we should make any variable that we know for sure will never change `const`. For example, the first month will always be January, so `const firstMonth = 'January';` is a good use of `const`. One good rule of thumb when working with variables is first assigning any variable to  `const` at first, unless you're absolutely sure it will change. This ensures that nothing is able to change its value unexpectedly in the code later on. When it becomes apparent that we need to change the value of the variable in the future, we can then decide to promote it to `let` so that it can be reassigned.
 
 ### Functions
 
@@ -315,11 +315,11 @@ console.log("The area of circle with radius 12 is " + (3.14 * 12 * 12));
 // and so on...
 ```
 
-We'd have to continue to copy this one line and manually change the numbers contained within it! This involves a ton of repetition, and copying and pasting code is a big no-no in programming (don't worry, we've all been guilty of it at one point). What if there was another way we could write most of the functionality (pun intended) *once*, then calling that code over and over again, only changing the actual radius value? This, in fact, is the exact purpose of functions!
+We'd have to continue to copy this one line and manually change the numbers contained within it! This involves a ton of repetition, and copying and pasting code is a big no-no in programming (don't worry, we've all been guilty of it at one point). What if there was another way we could write most of the *function*ality (pun intended) *once*, then call that code over and over again, only changing the actual radius value? This, in fact, is the exact purpose of functions!
 
 **Functions**
 
-**Functions** in JavaScript are useful when performing a similar action over and over again. You might be more familiar with mathematical functions, which look something like this: `f(x) = x + 3`. In math, there is an *input* (`x` in this case). A computation is performed on the input `x + 3`, and the result of this computation is then represented as the output (`f(x) here`). It turns out that functions in JavaScript are conceptually very similar!
+**Functions** in JavaScript are useful when performing a similar action over and over again. You might be more familiar with mathematical functions, which look something like this: `f(x) = x + 3`. In math, there is an *input* (`x` in this case). A computation is performed on the input `x + 3` using a function `f`, and the result of this computation is then represented as the output (`f(x) here`). It turns out that functions in JavaScript are conceptually very similar!
 
 The following is an example of a valid function declaration in JavaScript:
 
@@ -329,9 +329,9 @@ function areaOfCircle(r) {
 }
 ```
 
-This function is essentially fulfilling our requirement of finding the area of a circle. Here, `r`, which is within the parentheses, is the **parameter**, which is our "input" to the function. We then use this parameter in the function body, which holds our computations. The function body is represented by placing curly braces `{}` on both sides of where the function body goes. Here, the computation is `3.14 * r * 4`. Finally, we return the value produced from this computation using the `return` keyword, which becomes the result of the entire function.
+This function is essentially fulfilling our requirement earlier of finding the area of a circle. Here, `r`, which is within the parentheses, is the **parameter**, which is our "input" to the function. We then use this parameter in the function body, which holds our computations. The function body is represented by placing curly braces `{}` on both sides of where the function body goes. Here, the computation is `3.14 * r * r`. Finally, we return the value produced from this computation using the `return` keyword, which becomes the result of the entire function.
 
-After the function is declared, we can then *call* the function using its name (`areaOfCircle`), then adding parentheses after. Since this function is expecting a parameter value, we add a value within the parentheses, which becomes the radius of our circle in this case.
+After the function is declared, we can then *call* the function using its name (`areaOfCircle`), then adding parentheses `()` after. Since this function is expecting a parameter value, we add a value within the parentheses, which becomes the radius of our circle in this case.
 
 ``` javascript
 > areaOfCircle(3);
@@ -360,7 +360,7 @@ function areaOfCircle2(r) {
 }
 ```
 
-When we don't specify an explicit `return`, the function will just run all of its actions within the function body, and return out of the function once the function body is finished.
+When we don't specify an explicit `return`, the function will just run all of its actions within the function body, and then return out of the function once the function body is finished.
 
 Now, we can replace the lines in our initial motivation with simple function calls:
 
@@ -407,7 +407,7 @@ Both function declarations and function expressions will be used interchangeably
 
 ### Conditionals
 
-Conditionals are a concept in JavaScript that allow us to branch to different logic in our code *depending* on if some (boolean) condition is met or not. As an example to demonstrate how conditionals work, let's take a personal dilemma I had just this morning:
+Conditionals are a concept in JavaScript that allow us to branch to different logic/actions in our code *depending* on if some (boolean) condition is true or not. As an example to demonstrate how conditionals work, let's take a personal dilemma I had just this morning:
 
 <img src="./images/conditionals.png" alt="conditional branching 8 AM lecture" style="zoom:67%;" />
 
@@ -445,7 +445,7 @@ This setup is more aligned with our previous example with whether or not I shoul
 
 **`if-elseif-else` ladder**
 
-Finally, if we have multiple conditions we want to check with different actions required to be run for each condition, we can use the full version of conditions in JavaScript, the `if-elseif-else` ladder. This structure takes an arbitrarily large amount of `else if` statements in between the `if` and `else` statements, adding the condition to check for for each `else if` and the actions that should be taken if the condition evaluates to true.
+Finally, if we have multiple conditions we want to check with different actions required to be run for each condition, we can use the full version of conditionals in JavaScript, the `if-elseif-else` ladder. This structure takes an arbitrarily large amount of `else if` statements in between the `if` and `else` statements, adding another condition to check for for each `else if` and the actions that should be taken if the condition evaluates to true.
 
 ``` javascript
 if (cond1) {
@@ -459,7 +459,7 @@ if (cond1) {
 }
 ```
 
-It is important to call out that this code executes from top to bottom. First the `if` statement will be checked. If this `cond1` is `true`, it will run the actions withing the `if` statement block and move on past the `if-elseif-else` ladder entirely. However, if the condition `cond1` is `false`, it will move on to the next statement in the ladder, which is the `else if` statement that checks `cond2`. On and on it goes until it finds an `else if` statement whose condition is `true`. If it goes all the way to the end without any of the conditions resulting in true, it will run the actions in the `else` block.
+It is important to call out that this code executes from top to bottom. First the `if` statement will be checked. If this `cond1` is `true`, it will run the actions withing the `if` statement block and move on past the `if-elseif-else` ladder entirely. However, if the condition `cond1` is `false`, it will move on to the next statement in the ladder, which is the `else if` statement that checks `cond2`. On and on it goes until it finds an `else if` statement whose condition is `true`. If it goes all the way to the end without any of the conditions resulting in true, the  actions in the `else` block will be run instead.
 
 As an example, let's create a function that tests if I will be functional or not the next day depending on how many hours of sleep I got the night before. Let's name this function `isEugeneFunctional`, and within it will be a conditional check on the parameter `hours`.
 
@@ -531,7 +531,7 @@ If we try and call this function and pass it an `hours` value that is less than 
 isEugeneFunctional(2);  // prints "I will not be able to focus on things." (???)
 ```
 
-Why is it printing out the action for the `if` statement instead of for the action we want it to take, which is to print out "I am definitely going to crash this afternoon"? If you recall that conditionals are run from top to bottom though, the reason becomes more clear! Each condition is checked whether or not it is true; once it finds a condition it results in true, it will run the corresponding block and move on with the rest of the code, skipping any remaining conditional checks. Since our `hours` parameter value is 2, the first thing it will check is if `2 < 6`. Since it is, it prints "I will not be able to focus on things", and it skips the remaining conditional checks and moves on.
+Why is it printing out the action for the `if` statement instead of for the action we want it to take, which is to print out "I am definitely going to crash this afternoon."? If you recall that conditionals are run from top to bottom though, the reason becomes more clear! Each condition is checked whether or not it is true; once it finds a condition that results in true, it will run the corresponding block and move on with the rest of the code, skipping any remaining conditional checks. Since our `hours` parameter value is 2, the first thing it will check is if `2 < 6`. Since it is `true`, it goes into this block and prints "I will not be able to focus on things", and it skips the remaining conditional checks and moves on.
 
 This makes it clear that when working with ranges of values while comparing, *order matters*. If we want anything under 3 to be treated differently than anything between 3 and 6, we have to put the conditional check for `hours < 3` *before* the one for `hours < 6`, so our code runs as desired.
 
@@ -557,7 +557,7 @@ function isEugeneFunctional(hours) {
 
 We'll end our crash course into JavaScript today with basic objects.
 
-Let's say that we're Netflix, and we want to store data about movies. There are some properties related to movies that we may be interested in keeping tabs on. For example, every movie has a *title*, *director*, and *rating*. So far, we've only learned how to store single values in variables, so we might represent each movie as such
+Let's say that we're Netflix, and we want to store data about movies. There are some properties related to movies that we may be interested in keeping tabs on. For example, every movie has a *title*, *director*, and *rating*. So far, we've only learned how to store single values in variables, so we might represent each movie as such:
 
 ``` javascript
 /* Interstellar */
@@ -573,7 +573,7 @@ const rating2 = 2.8;
 
 And we would do this for each movie that we want to keep in our database. This doesn't seem like the best solution though - why do we have to declare 3 separate variables just for each movie? Here, I've written each property of related movies close together in the code, but there isn't any structure actually tying them together in order to demonstrate they're related.
 
-This is where objects in JavaScript come in! **Objects** are values that store a collection of data in *key-value pairs*. The keys are also known as the **properties** of the object. In our case, we would have a "movie" object where the properties are the title, director, and rating. The values for each of these properties are the actual values of those properties for that particular movie we are trying to represent. In our example, the values for each of our properties would be "Interstellar", "Christopher Nolan", and 8.6, respectively. All key-value pairs are encased in curly braces `{}` to signify that they are inside the same object.
+This is where objects in JavaScript come in! **Objects** are values that store a collection of data in *key-value pairs*. The keys are also known as the **properties** of the object. In our case, we would have a "movie" object where the properties are the title, director, and rating. The values for each of these properties are the actual values of those properties for that particular movie we are trying to represent. In our example, the values for each of our properties would be "Interstellar", "Christopher Nolan", and 8.6, respectively. Each key-value pair is separated using colons `:`, and all key-value pairs are encased in curly braces `{}` to signify that they are inside the same object.
 
 Here's how we would represent *Interstellar* as an object:
 
@@ -604,7 +604,7 @@ const movie2 = {
 
 Now that we have arranged our data within an object, how can we "take out" the values so that we can use them?
 
-In JavaScript, there are two ways of accessing the values corresponding to object properties: **dot notation** and **bracket notation**.
+In JavaScript, there are two ways of *accessing* the values corresponding to object properties: **dot notation** and **bracket notation**.
 
 Dot Notation: Access the value by using `obj.propertyName`
 
@@ -646,7 +646,7 @@ movie1['director'] = 'Tony Leondis';
 console.log(movie1['director'])  // "Tony Leondis"
 ```
 
-Now, people will think that *The Emoji Movie* got a rating of 8.6 instead of what it actually got - 3.3. Like it should have. Those were 1 hr 26 minutes I'll never get back.
+Now, people will think that *The Emoji Movie* got a rating of 8.6 instead of what it actually got - 3.3. Like it should have. Those were 1 hr 26 minutes of my life that I'll never get back.
 
 Adding an object is essentially the same process as modifying an existing object property, except we name a property that is not yet in the object but we want to add. For example, let's add a `releaseDate` property that holds the day when the movie was released.
 
@@ -666,11 +666,32 @@ movie1['releaseDate'] = 'July 28, 2017';
 console.log(movie1['releaseDate']);  // "July 28, 2017"
 ```
 
-### Conclusion
+**Deleting Object Properties**
+
+To delete an object property, we use the `delete` keyword before the object property we want to delete. Let's delete the `rating` property using both dot notation and bracket notation:
+
+Dot notation:
+
+``` javascript
+// delete "director" property
+delete movie1.director;
+console.log(movie1.director);  // it's gone!! 
+```
+
+Bracket notation:
+
+``` javascript
+// delete "director" property
+delete movie1['director'];
+console.log(movie1['director']);  // it's gone!!
+```
+
+### Conclusion & Resources
 
 Congratulations, you've successfully started your journey into React Native and JavaScript!! Due to time constraints, we were unfortunately unable to cover some other concepts in JavaScript, such as Arrays. We'll be covering all of these missed topics as the workshop series continues on, but if you're itching to learn, here are couple of resources to learn more about JavaScript:
 
+- [JavaScript Basics](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics)
 - [Modern JavaScript](https://javascript.info/)
-- [A Re-introduction to JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript) (for people with more experience)
+- [A Re-introduction to JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript) (for people who've already had exposure to JavaScript)
 
 We're excited to have all of you with us in Hack Sprint! We have a bunch more coming your way about React Native, so stay tuned!
