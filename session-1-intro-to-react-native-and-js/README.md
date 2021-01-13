@@ -31,6 +31,7 @@
   - [Functions](#functions)
   - [Conditionals](#conditionals)
   - [Objects](#objects)
+  - [Conclusion](#conclusion)
 
 Welcome to the very first session of Hack Sprint during Winter '21! If you are here for the instructions for how to create your very own React Native app using Expo, feel free to hop straight to the [Creating Your Own React Native App](#creating-your-own-react-native-app) section.
 
@@ -478,9 +479,198 @@ function isEugeneFunctional(hours) {
 }
 ```
 
+Alternatively, if I break this 6 hour threshold, I should be good to go for the next day. Let's add a branch for this action as an `else` statement:
 
+``` javascript
+function isEugeneFunctional(hours) {
+  if (hours < 6) {
+    console.log('I will not be able to focus on things.');
+  } else {
+    console.log("I'm fully functional!");
+  }
+}
+```
 
+Great! Now I have code that handles both if I didn't get enough sleep, and if I got over 6 hours.
 
+I have this thing, though, that when I get *too much* sleep (yes, it is possible), I won't be able to sleep the next day. If we want to add a new condition that checks if the hours are over a certain number, say 12, I won't be able to sleep the next day. We can add this logic in an `else if` statement!
+
+``` javascript
+function isEugeneFunctional(hours) {
+  if (hours < 6) {
+    console.log('I will not be able to focus on things.');
+  } else if (hours > 12) {
+    console.log("I won't be able to sleep the next day.");
+  } else {
+    console.log("I'm fully functional!");
+  }
+}
+```
+
+On and on we can go until we've fully captured all the different situations for when I will or won't be functional the next day depending on how much sleep I got the night before.
+
+As a final example, let's add a situation where if I slept under 3 hours, I will inevitably crash during the middle of the day. We might add this new logic as an `else if` statement as such:
+
+``` javascript
+function isEugeneFunctional(hours) {
+  if (hours < 6) {
+    console.log('I will not be able to focus on things.');
+  } else if (hours > 12) {
+    console.log("I won't be able to sleep the next day.");
+  } else if (hours < 3) {
+    console.log('I am definitely going to crash this afternoon.');
+  } else {
+    console.log("I'm fully functional!");
+  }
+}
+```
+
+If we try and call this function and pass it an `hours` value that is less than 3, however, the results are not what we expect!
+
+``` f`javascript
+isEugeneFunctional(2);  // prints "I will not be able to focus on things." (???)
+```
+
+Why is it printing out the action for the `if` statement instead of for the action we want it to take, which is to print out "I am definitely going to crash this afternoon"? If you recall that conditionals are run from top to bottom though, the reason becomes more clear! Each condition is checked whether or not it is true; once it finds a condition it results in true, it will run the corresponding block and move on with the rest of the code, skipping any remaining conditional checks. Since our `hours` parameter value is 2, the first thing it will check is if `2 < 6`. Since it is, it prints "I will not be able to focus on things", and it skips the remaining conditional checks and moves on.
+
+This makes it clear that when working with ranges of values while comparing, *order matters*. If we want anything under 3 to be treated differently than anything between 3 and 6, we have to put the conditional check for `hours < 3` *before* the one for `hours < 6`, so our code runs as desired.
+
+Once we make the necessary changes as such:
+
+``` javascript
+function isEugeneFunctional(hours) {
+  if (hours < 3) {
+    console.log('I am definitely going to crash this afternoon.');
+  } else if (hours > 12) {
+    console.log("I won't be able to sleep the next day.");
+  } else if (hours < 6) {
+    console.log('I will not be able to focus on things.');
+  } else {
+    console.log("I'm fully functional!");
+  }
+}
+```
+
+ our code will run exactly as intended!
 
 ### Objects
 
+We'll end our crash course into JavaScript today with basic objects.
+
+Let's say that we're Netflix, and we want to store data about movies. There are some properties related to movies that we may be interested in keeping tabs on. For example, every movie has a *title*, *director*, and *rating*. So far, we've only learned how to store single values in variables, so we might represent each movie as such
+
+``` javascript
+/* Interstellar */
+const title1 = 'Interstellar';
+const director1 = 'Christopher Nolan';
+const rating1 = 8.6;
+
+/* Cats */
+const title2 = 'Cats';
+const director2 = 'Tom Hooper';
+const rating2 = 2.8;
+```
+
+And we would do this for each movie that we want to keep in our database. This doesn't seem like the best solution though - why do we have to declare 3 separate variables just for each movie? Here, I've written each property of related movies close together in the code, but there isn't any structure actually tying them together in order to demonstrate they're related.
+
+This is where objects in JavaScript come in! **Objects** are values that store a collection of data in *key-value pairs*. The keys are also known as the **properties** of the object. In our case, we would have a "movie" object where the properties are the title, director, and rating. The values for each of these properties are the actual values of those properties for that particular movie we are trying to represent. In our example, the values for each of our properties would be "Interstellar", "Christopher Nolan", and 8.6, respectively. All key-value pairs are encased in curly braces `{}` to signify that they are inside the same object.
+
+Here's how we would represent *Interstellar* as an object:
+
+``` javascript
+/* Interstellar */
+const movie1 = {
+  title: 'Interstellar',
+  director: 'Christopher Nolan',
+  rating: 8.6,
+};
+```
+
+We can now hold all of this data in one variable, which makes our code a lot cleaner and more organized!
+
+Recall from the [Functions](#functions) section that functions in JavaScript are values themselves. This means that functions can be added as a value of a particular property in an object! When a function exists inside of a function, they're called **methods**. Here is an example of how we would add a method into our object:
+
+``` javascript
+/* Cats */
+const movie2 = {
+  title: 'Cats',
+  director: 'Tom Hooper',
+  rating: 2.8,
+  printRating: () => { console.log(2.8); },
+};
+```
+
+**Accessing Object Properties**
+
+Now that we have arranged our data within an object, how can we "take out" the values so that we can use them?
+
+In JavaScript, there are two ways of accessing the values corresponding to object properties: **dot notation** and **bracket notation**.
+
+Dot Notation: Access the value by using `obj.propertyName`
+
+``` javascript
+let title = movie1.title;
+console.log(title);  // "Interstellar"
+```
+
+Bracket notation: Access the value by using `obj['propertyName']` (Single/double quotes required)
+
+``` javascript
+let director = movie1['director'];
+console.log(director);  // "Christopher Nolan"
+```
+
+Now that we have brought out the value in a variable, we can use our variable instead for ease of access!
+
+**Modifying/Adding Object Properties**
+
+The method by which we modify *and* add object properties are done the same way in JavaScript. Again, it involves either using the dot notation or bracket notation to access the property, then assigning a new value to it.
+
+Let's say we're a hacker, and we want to play a prank by changing the movie title of "Interstellar". (Hacking real Netflix is nowhere near this easy, by the way).
+
+Dot notation:
+
+``` javascript
+// updating "title" property
+console.log(movie1.title)  // "Interstellar"
+movie1.title = 'The Emoji Movie';
+console.log(movie1.title)  // "The Emoji Movie"
+```
+
+Bracket notation:
+
+``` javascript
+// updating "director" property
+console.log(movie1['director'])  // "Christopher Nolan"
+movie1['director'] = 'Tony Leondis';
+console.log(movie1['director'])  // "Tony Leondis"
+```
+
+Now, people will think that *The Emoji Movie* got a rating of 8.6 instead of what it actually got - 3.3. Like it should have. Those were 1 hr 26 minutes I'll never get back.
+
+Adding an object is essentially the same process as modifying an existing object property, except we name a property that is not yet in the object but we want to add. For example, let's add a `releaseDate` property that holds the day when the movie was released.
+
+Dot notation:
+
+``` javascript
+// adding "releaseDate" property
+movie1.releaseDate = 'July 28, 2017';
+console.log(movie1.releaseDate);  // "July 28, 2017"
+```
+
+Bracket notation;
+
+``` javascript
+// adding "releaseDate" property
+movie1['releaseDate'] = 'July 28, 2017';
+console.log(movie1['releaseDate']);  // "July 28, 2017"
+```
+
+### Conclusion
+
+Congratulations, you've successfully started your journey into React Native and JavaScript!! Due to time constraints, we were unfortunately unable to cover some other concepts in JavaScript, such as Arrays. We'll be covering all of these missed topics as the workshop series continues on, but if you're itching to learn, here are couple of resources to learn more about JavaScript:
+
+- [Modern JavaScript](https://javascript.info/)
+- [A Re-introduction to JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript) (for people with more experience)
+
+We're excited to have all of you with us in Hack Sprint! We have a bunch more coming your way about React Native, so stay tuned!
