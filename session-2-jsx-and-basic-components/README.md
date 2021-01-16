@@ -15,9 +15,12 @@
 
 - [Components in React Native]()
 - [Intro to JSX]()
-- [View Only Components](#view-only-components)
+- [Basic Components](#basic-components)
+- [StyleSheets](#stylesheets)
 - [Third Party Components](#third-party-components)
 
-## View Only Components
+## Basic Components
+
+## StyleSheets
 
 ## Third Party Components
