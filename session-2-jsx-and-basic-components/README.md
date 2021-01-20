@@ -68,10 +68,12 @@ export default function App() {
   );
 } 
 ```
+
+Note: SafeAreaView is currently only supported on iOS (sorry Android) 
 ### ScrollView
 Alright, on to the next view! So if you've been messing around a little bit with components in React Native, you might have noticed that eventually when you add enough components, things start to go off the screen. Intuitively, you would try to scroll down to see the rest of your content.
 
-*Cue dramatic music* **DUN DUN DUN**, turnsout you won't be able to scroll at all and you'll be left stuck with content beyond the screen, somewhere in the void :(
+*Cue dramatic music* **DUN DUN DUN**, turns out you won't be able to scroll at all and you'll be left stuck with content beyond the screen, somewhere in the void :(
 
 We solve this issue by using a ScrollView, which is used to render (display on screen) lists of components and enables scrolling! Huh? Wait a minute... *LISTS(???)* of components? I don't think we've learned about how to represent lists of items in JavaScript yet. Oh shoot, looks like we'll have to take a quick detour here. If you already know about arrays, we still recommend you at least take a look at the [Map Function](#the-map-function) section. Otherwise, feel free to skip over to [rendering lists of components](#flatlist).
 
@@ -170,7 +172,7 @@ console.log(greetings);
 
 Hopefully, you can see that this will be useful for us when we start to think about how we can transform data so that it can be displayed as a list of components on screen.
 ### FlatList
-Alrighty, after that ~~not so~~ quick detour, we can finally come back to talking about ScrollView. Oh wait, why is the title of this section FlatList? Oh that's right, it's because FlatLists do the same thing as ScrollViews but ~better~
+Alrighty, after that ~~not so~~ quick detour, we can finally come back to talking about ScrollView. Oh wait, why is the title of this section FlatList? Oh that's right, it's because FlatLists do the same thing as ScrollViews... but **better**.
 
 Seriously though, FlatLists are also containers whose purpose is to display a list of components. The different is that FlatLists will load components **"lazily"**, meaning that only the components that can actually be seen on screen at a given time are loaded. The rest load as you scroll down. This is in contrast to ScrollView, which attempts to load the entire list at once. As you can imagine, this is extremely inefficient and causes performance issues when dealing with very large lists. Because of this, we're gonna go ahead and forget about ScrollView completely and stick to FlatList from now on.
 
@@ -202,7 +204,7 @@ To use a FlatList, we first have to have some array of data. See the [ListCompon
 
 Let's break this down. So the first thing is that the `<FlatList />` component takes a prop `data`. This prop refers to the array of data you want to manipulate and display on the screen. The next is the `renderItem` prop. This prop takes a function that returns some JSX. You can very much think of this function as similar to how the function that the array map function takes as an argument. Here, the function we pass in takes a JavaScript object `obj` as an argument. One of the properties of this object is called `item` and we use this property to refer to one of the items in our `data` array (recipes in this case).
 
-So, what I return from this function is the JSX that corresponds to how I want each recipe in my `recipes` array to end up looking like on the screen. I use specific properties from my recipe data to display things like the "Cook Time," "title," and even an image of the dish. 
+So what I return from this function is the JSX that corresponds to how I want each recipe in my `recipes` array to end up looking like on the screen. I use specific properties from my recipe data to display things like the "Cook Time," "title," and even an image of the dish. 
 ## StyleSheets
 
 ### Creating StyleSheets
