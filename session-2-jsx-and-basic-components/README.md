@@ -28,9 +28,65 @@
 
 ## Components In React Native
 
+Previously, we learned about what React Native is and how we can create amazing applications using it. Now, let's get into how React Native apps are made!
+
 ### Basic Components
 
+Fun fact: The Facebook application is (mostly) written in React Native! Let's take a look at the lovely ACM Hack Facebook group page and see if we can get an idea of what makes up an application.
+
+![Basic Components inside of Facebook](./images/components-fb.png)
+
+Well, there's an image with the ACM Hack logo at the top of the page, text within each post, and there is some sort of container holding all the content in the page. There may even be containers holding each of the posts as well! All of these parts come together and build on one another to become the application! It would be quite convenient if these were provided for us to build off of. Well, I have some good news for you!
+
+Image, Text, and the "Container" (which we'll later define as View) are some basic components of React Native! But what exactly are components? Components are like **building blocks** for all the content on your screen. Think of a Lego set that has many parts for a specific purpose that come together to build the final product for that set. Components work in that way. We can piece together components that have a specific purpose to create our application! As we saw with Facebook, there can be many components within even just one screen or page of an application!
+
+As basic components we can find these inside of a package called `react-native`. This package holds many prebuilt components provided by the React Native developers. As we saw in the Facebook example, there are a few basic components that are used quite often!
+
+- View: This is like the container from earlier! It created an empty container (a blank canvas) to put other components inside!
+- Text: Displays text
+- Image: Displays images
+
+There are of course many basic components that can be found [here](https://docs.expo.io/versions/v40.0.0/react-native/view/)!
+
 ### Intro to JSX
+
+Components are pretty cool! But how do we actually use components in our code?
+
+Well first, we must **import** these components into our code. Importing lets us use components from other files. In the case of basic components, the developers of React Native have prebuilt components and provided it to use in the `react-native` package from earlier. Lucky us!
+
+![Import Statement Syntax](./images/import-syntax.png)
+
+There is a certain way in which we must import these basic components. We start the line with `import`. Then, in curly braces we put which components we want from `react-native` specifically. Now the file we have imported this in knows what these components are and they are ready to be used in our code!
+
+Now that we have these components, we must use it in the code. React Native is built on JavaScript, so let's do the following!
+
+```js
+let phrase = <Text>Hacc Time!</Text>;
+```
+
+And this is a perfectly valid thing to do! Now phrase is `Text` that says "Hacc Time!". But hold on... this isn't JavaScript. Don't you have to wrap strings in quotation marks???
+
+![JSX Meme - "This Isn't Javascript!"](./images/jsx-kazookid.png)
+
+While it is not *exactly* JavaScript, it is a very fancy thing called JSX! JSX stands for JavaScript XML (which stands for Extensible Markup Language, which is just a fancy way of saying it's some information wrapped in tags that's easily readable for both humans and computers). The previous statement isn't allowed in JavaScript, but JSX lets us write code more efficiently, since we can directly put what we want inside of these components and use them effectively.
+
+JSX can be used within JavaScript functions as well! Here we see some function `HelloWorld` that will give us this text and display it when we call it.
+
+```js
+const HelloWorld = () => { 
+  return <Text>Hello, world!</Text>
+}
+```
+
+Something super cool that we can do with JSX and components is that we can put JavaScript values and expressions inside of JSX! Take the following set of code:
+
+```js
+const name   = "React Native";
+const phrase = <Text>{name} is super awesome!</Text>;
+```
+If we didn't have that curly brace, `phrase` would just state "name is super awesome!". However, the curly braces tells us and JSX that we want to use a JavaScript value inside of our `<Text>` component. Now, if we choose to display `phrase`, the result will be "React Native is super awesome!".
+
+JSX is super handy in making working with components in our code easy to write and use!
 
 ## View Components
 
