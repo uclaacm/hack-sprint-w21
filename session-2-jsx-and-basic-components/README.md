@@ -16,14 +16,18 @@
 - [Components in React Native](#components-in-react-native)
   - [Basic Components](#basic-components)
   - [Intro to JSX](#intro-to-jsx)
+  - [Finished Demo](./final_files/BasicComponents.js)
 - [View Components](#view-components)
   - [SafeAreaView](#safeareaview)
   - ~~[ScrollView](#scrollview)~~
     - [Quick Detour: Arrays](#arrays)
   - [FlatList](#flatlist)
+  - [Finished Demo](./final_files/ListComponents.js)
 - [StyleSheets](#stylesheets)
   - [FlexBox Layout](#flexbox-layout)
+  - [Finished Demo](./final_files/FlexBoxSimple.js)
 - [Third Party Components](#third-party-components)
+  - [Finished Demo](./final_files/RecipeDemo.js)
 - [Do-It-Yourself Activity](#diy-activity)
 
 ## Components In React Native
@@ -262,19 +266,176 @@ Let's break this down. So the first thing is that the `<FlatList />` component t
 
 So what I return from this function is the JSX that corresponds to how I want each recipe in my `recipes` array to end up looking like on the screen. I use specific properties from my recipe data to display things like the "Cook Time," "title," and even an image of the dish. 
 ## StyleSheets
+So far we've been talking a lot about the content that goes onto your app's screen, represented by different components. Now that we have a basic grasp of using components, let's shift our focus to learning how we can change their appearance and layout.
 
+Stylesheets are what React Native uses to create and apply style rules to different components on a screen. We represent a stylesheet using a JavaScript object (usually a `styles` object) that contains some sets of style rules. Don't worry if some of that didn't make any sense, we'll get a better idea of what this all means as we go.
 ### Creating StyleSheets
+Before we actually create any stylesheets, we have to import the `StyleSheet` object from `'react-native`'. So, at the top of the `App.js` file, we'll make sure we have the following line of code:
+```js
+import { StyleSheet } from 'react-native';
+```
 
+Now that we have this, we can create our stylesheet reference. Below is an example of what this might look like:
+```js
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'pink'
+  }
+});
+```
+
+So what's going on here? First of all, we are creating a variable called `styles` which will act as our stylesheet from now on. What we assign to the variable is the result from using the `StyleSheet.create()` function.
+
+This `create()` function takes in an object, and this object just like any other object has properties and values. It just so happens that each of these properties also maps to another object. 
+
+To make this less confusing, let's refer to the outer object as the style object. Inside of this style object we have a bunch of named styles (the style object's properties). Each of these named styles has a corresponding set of style rules. 
+
+In our example, `container` is one of the named styles and it corresponds to one style rule `backgroundColor: 'pink'`. In this way, we can create a bunch of different names for different sets of style rules so that we can refer to the more easily. This is all wrapped up in the `styles` variable for us.
 ### Using StyleSheets
+Now that we know how to create our stylesheet, let's go ahead and see how we can apply one of our sets of style rules to a component. Every component in React Native has a style property that can be specified. So, for example, if we want to apply the style rules from the "container" style we made we can do something like:
+```jsx
+<View style={styles.container}>
+  {/* other components */}
+</View>
+```
 
+And now, this particular View component will have a pink background color. Additionally, we can also apply multiple styles to a component by simply passing in an array of styles instead:
+```jsx
+<View style={[styles.container1, styles.container2]}>
+  {/* other components */}
+</View>
+```
+
+In these cases, the styles later in the array will take precedence over the styles earlier in the array.
+
+#### Some Basic Style Properties
+Below is a list of some of the common style properties. Again, don't feel the need to memorize these, Google is your friend and here is also a nice [React Native Styles Cheatsheet](https://github.com/vhpoet/react-native-styling-cheat-sheet) for your reference.
+
+- `backgroundColor`: component's background color
+- `color`: text color
+- `fontSize`: text size
+- `margin`: space between components
+- `padding`: space a component takes up
+- `borderWidth`: thickness of border around a component
+- `borderColor`: color of border
+- `borderRadius`: adds rounded corners to a border
+
+#### A Word on Cascading
+If you are familiar with CSS, be careful not to confuse React Native stylesheets with cascading style sheets. Stylesheets in React Native do not always cascade. They only do so when the parent and child components are the same type of components (i.e. both a View, both a Text, etc). If you do not know what this means, don't worry about it, it's not necessary to using stylesheets.
 ### FlexBox Layout
-
+Let's talk about flexbox, which is what React Native uses for its components. If you've never heard of flexbox, the simple explanation is that flexbox is just a particular way that we can specify where components are positioned and how components are laid out on the screen. You can check out the [full docs](https://reactnative.dev/docs/flexbox) for more specific information, but we will just be going over some of the basic ways to use flexbox today.
 #### Flex Direction
+The most basic part of using flexbox is specifying the direction in which components are laid out. There are two primary directions we use, called 'column' and 'row,' which we can see below:
+![Flex Direction Example](./images/flexDirection.png)
 
+The flexDirection specified is also referred to as the "main axis" (or the axis on which components are aligned on). Flex Direction is usually relevant when we have a container (like a View) with many components inside of it and we would like to manipulate the layout of those components. For example:
+```jsx
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <View style={styles.box}>
+        <Text>1</Text>
+      </View>
+      <View style={styles.box}>
+        <Text>2</Text>
+      </View>
+      <View style={styles.box}>
+        <Text>3</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row'
+  },
+  box: {
+    padding: 10
+  }
+});
+```
+The above snippet will layout the three nested Views in a row format. Note that the default direction for all React Native components is 'column' so if I did not specify a flex direction then the three nested components would be stacked on top of each other.
 #### Alignment
+One of most common things you will likely want to do when developing an app is trying to center components (whether its centering on the screen as a whole or within some nested component). Good news! Flexbox gives us easy ways to specify the alignment of components. We'll go ahead and take a look at how this works:
+
+- `justifyContent`: alignment on the main axis 
+  - corresponds with flexDirection
+- `alignItems`: alignment on the "cross" axis
+  - perpendicular to flexDirection (i.e. column's cross axis is row)
+
+The above items are two style properties that we can specify to determine the alignment of components. As an example, they might be used like so:
+```jsx
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <View style={styles.box}>
+        <Text>1</Text>
+      </View>
+      <View style={styles.box}>
+        <Text>2</Text>
+      </View>
+      <View style={styles.box}>
+        <Text>3</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 300,
+    borderWidth: 1
+  },
+  box: {
+    padding: 20,
+    borderWidth: 5
+  }
+})
+```
+In the above example, the three nested components will be arranged in a row layout. `justifyContent` here will center the three components horizontally within the parent View. `alignItems` here centers them vertically within the parent View. This ends up looking something like: 
+
+<img src="./images/flex-example1.png" width="300">
 
 #### flex: 1
+A not on using flexbox, often times the alignment properties we use will not appear to work properly when we first try them out. Frantically scratching your head, you might spend hours trying to figure out why (*sad confused noises*). Here is our attempt to hopefully reduce the amount of time you spend in frustrated confusion. Enter `flex: 1`. This style property indicates that components shuld take up as much of the available space as possible (at least along the parent's main axis).
 
+In the situations where flexbox alignment "appears" to not be working, we can do some clever things to see that in fact flexbox is working as expected but the parent View you are using to align child Views is actually just not taking up enough space for the alignment properties to make a noticeable difference. 
+
+Let's take the below example:
+
+![Flex 1 Part 1](./images/flex-1-example1.png)
+
+Here we have a two Views nested inside of another view. Everything here has borders so hopefully it's clear to see that the parent View actually only takes up about half the screen. This will be true for most situations: components will only usually take up as much space as they need to fit their content. But we can see that if you tried to center these components vertically, it wouldn't do anything since they already are "centered" in the parent View.
+
+How do we fix this? Well, we can use `flex: 1`. Putting `flex: 1` on the parent View here will extend it to fill the remaining vertical space on the screen. Thus, centering vertically now will put both child components in the middle of the screen, like so:
+
+![Flex 1 Part 2](./images/flex-1-example2.png)
 ## Third Party Components
+We've talked a TON about React Native componenets, how to use them, how to style them, how to lay them out, etc. Let's take a small breather here and do something a little more fun. We're gonna talk a little bit about third party components, specifically Expo components.
 
+Now, since React Native is a framework built to let us avoid native mobile development and instead use JavaScript, we lose some of the power of native languages like swift or java/kotlin. In particular, we lose access to many of the mobile features like your phone's camera, push notifications, google/apple maps, and even its built in Accelerometer.
+
+What many of Expo components do is allow us to still have access to these features. So using these will be important for mobile-driven development in the future. For now, we will not go too much into these since many of them require us to use asynchronous JavaScript which we have not done yet but will go over in a future session.
+
+For now, we will stick to one of the more fun Expo components, which is [Vector Icons!](https://docs.expo.io/guides/icons/). Using these is actually pretty easy, if you created your project with `expo init` then you can access all types of icon components from the `@expo/vector-icons` package.
+
+To find an icon you want and how to use it, we can browse the Expo [Vector Icon Directory](https://icons.expo.fyi/). Once we find one, it will tell us exactly how to use it, like so:
+
+![Vector Icon](./images/expo-vector-icons.png)
 ## DIY Activity
+Alright *whew*, we've gone through a lot lot lot of content in this session, but one of the best ways to learn some of these skills is to get your hands dirty and do it yourself! So we encourage you to make a basic app about something! 
+
+Feel free to take a look at the [Expo Docs](https://docs.expo.io/versions/v40.0.0/react-native/image/) to see more examples of how to use components. Also take a look at the [React Native Styles Cheatsheet](https://github.com/vhpoet/react-native-styling-cheat-sheet) to see a full list of style properties and what they do. 
+
+Ideas for what to make:
+- An app to show off your favorite animals, foods, places to visit, etc.
+- An app that displays your reviews of movies you've watched
+- A gallery of photos revolving around some topic (kind of like a timeline)
+
+Example - a recipes app:
+
+![Example App](./images/recipe-demo.jpg)
