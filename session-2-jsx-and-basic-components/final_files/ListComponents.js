@@ -52,7 +52,7 @@ export default function App() {
     const renderRecipes = recipes.map((recipe) => {
         return (
             <View>
-                <Image 
+                <Image
                     style={{
                         width: 100,
                         height: 100
@@ -62,40 +62,40 @@ export default function App() {
                     }}
                 />
                 <Text>{recipe.title}</Text>
-                <Text>Cooking Time: {recipe.cook_time}</Text>
+                <Text>Cook Time: {recipe.cook_time}</Text>
             </View>
         );
     });
 
     return (
-    <SafeAreaView>
-        <StatusBar style="auto" />
-        {/* Avoid using ScrollView, only here for demonstration purposes */}
-        {/* <ScrollView>
+        <SafeAreaView>
+            <StatusBar style="auto" />
+            {/* Avoid using ScrollView, only here for demonstration purposes */}
+            {/* <ScrollView>
             {renderRecipes}
         </ScrollView> */}
 
-        <FlatList 
-            data={recipes}
-            renderItem={(obj) => {
-                return (
-                    <View>
-                        <Image 
-                            style={{
-                                width: 100,
-                                height: 100
-                            }}
-                            source={{
-                                uri: obj.item.img_uri
-                            }}
-                        />
-                        <Text>{obj.item.title}</Text>
-                        <Text>Cook Time: {obj.item.cook_time}</Text>
-                    </View>
-                );
-            }}
-        />
+            <FlatList
+                data={recipes}
+                renderItem={(obj) => {
+                    return (
+                        <View>
+                            <Image
+                                style={{
+                                    width: 100,
+                                    height: 100
+                                }}
+                                source={{
+                                    uri: obj.item.img_uri
+                                }}
+                            />
+                            <Text>{obj.item.title}</Text>
+                            <Text>Cook Time: {obj.item.cook_time}</Text>
+                        </View>
+                    );
+                }}
+            />
 
-    </SafeAreaView>
+        </SafeAreaView>
     );
 }

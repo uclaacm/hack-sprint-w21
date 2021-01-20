@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, View, Text, Image, SafeAreaView, FlatList } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function App() {
     const recipes = [
@@ -10,81 +10,81 @@ export default function App() {
             title: 'Roasted Oolong Boba Milk Tea',
             cook_time: '15 min',
             img_uri: 'https://cdn.shopify.com/s/files/1/0263/4812/6298/products/Capture_419f3671-7cf8-4020-a095-99faa3db0ee4_1005x.png?v=1589699475',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, est?'
+            desc: 'Literally the best boba you will ever have <3 (You cannot change my mind)'
         },
         {
             id: 1,
             title: 'Niku Udon',
             cook_time: '1 hr, 40 min',
             img_uri: 'https://tarasmulticulturaltable.com/wp-content/uploads/2014/02/Niku-Udon-Japanese-Meat-Udon-4-of-5-e1573750889431.jpg',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, est?'
+            desc: 'The best bowl of udon to recapture those Sawtelle Marugame vibes :\')'
         },
         {
             id: 2,
             title: 'Saag Paneer',
             cook_time: '25 min',
             img_uri: 'https://www.sainsburysmagazine.co.uk/uploads/media/2400x1800/07/7337-Saag-Paneer.jpg',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, est?'
+            desc: 'Delicious, creamy, savory saag paneer (shoutout to Maharaja). Pairs amazingly well with Naan bread or Basmati Rice!'
         },
         {
             id: 3,
             title: 'Chicken Fettuccine Alfredo',
             cook_time: '30 min',
             img_uri: 'https://www.modernhoney.com/wp-content/uploads/2019/04/Chicken-Fettucine-Alfredo-6.jpg',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, est?'
+            desc: 'Italy calling your name? Check out this amazing fettuccine alfredo dish to become a true pasta master (Olive Garden could never).'
         },
         {
             id: 4,
             title: 'Peposa Dell\'Impruneta',
             cook_time: '3 hr, 40 min',
             img_uri: 'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F4642945.jpg',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, est?'
+            desc: 'Savory and tender tuscan black pepper beef.'
         },
         {
             id: 5,
             title: 'Crock Pot Beef Stew',
             cook_time: '8 hr, 30 min',
             img_uri: 'https://www.thechunkychef.com/wp-content/uploads/2018/01/Crockpot-Beef-Stew.jpg',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, est?'
+            desc: 'Slow cooked to perfection, this classic dish is a must during the winter season to keep you and the family warm.'
         },
         {
             id: 6,
             title: 'Kimchi Fried Rice',
             cook_time: '15 min',
             img_uri: 'https://omnivorescookbook.com/wp-content/uploads/2020/08/200806_Kimchi-Fried-Rice_550.jpg',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, est?'
+            desc: 'Easy and delicious *chefs kiss*'
         }
     ];
 
     return (
-    <SafeAreaView style={styles.container}>
-        <StatusBar style="auto" />
-        <FlatList 
-            contentContainerStyle={styles.cardList}
-            data={recipes}
-            renderItem={(obj) => {
-                return (
-                    <View style={styles.card}>
-                        <Image
-                            style={styles.cardImg}
-                            source={{
-                                uri: obj.item.img_uri
-                            }} 
-                        />
-                        <View style={styles.cardBody}>
-                            <Text style={styles.cardTitle}>{obj.item.title}</Text>
-                            <Text>{obj.item.desc}</Text>
-                            <Text style={styles.cookTime}>
-                                <Text style={styles.cookTimeLabel}>Cook Time <FontAwesome5 name="clock" size={12} />:</Text> {obj.item.cook_time}
-                            </Text>
+        <SafeAreaView style={styles.container}>
+            <StatusBar style="auto" />
+            <FlatList
+                contentContainerStyle={styles.cardList}
+                data={recipes}
+                renderItem={(obj) => {
+                    return (
+                        <View style={styles.card}>
+                            <Image
+                                style={styles.cardImg}
+                                source={{
+                                    uri: obj.item.img_uri
+                                }}
+                            />
+                            <View style={styles.cardBody}>
+                                <Text style={styles.cardTitle}>{obj.item.title}</Text>
+                                <Text>{obj.item.desc}</Text>
+                                <Text style={styles.cookTime}>
+                                    <Text style={styles.cookTimeLabel}>Cook Time <FontAwesome5 name="clock" size={12} />:</Text> {obj.item.cook_time}
+                                </Text>
+                            </View>
                         </View>
-                    </View>
-                );
-            }}
-            keyExtractor={(item) => {return item.id.toString();}}
-        />
+                    );
+                }}
+                keyExtractor={(item) => { return item.id.toString(); }}
+            />
 
-    </SafeAreaView>
+        </SafeAreaView>
     );
 }
 
@@ -104,14 +104,14 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         shadowColor: 'black',
         shadowOffset: {
-          width: 5,
-          height: 5
+            width: 5,
+            height: 5
         },
         shadowRadius: 5,
         shadowOpacity: 0.15,
         flexDirection: 'row',
         width: '95%',
-        padding: 20,  
+        padding: 20,
         marginTop: 10,
         marginBottom: 10
     },
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     cookTime: {
-      fontSize:  14
+        fontSize: 14
     },
     cookTimeLabel: {
         textTransform: 'uppercase',
