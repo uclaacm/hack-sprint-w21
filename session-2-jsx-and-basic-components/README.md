@@ -10,6 +10,8 @@
 
 - <a href="https://tinyurl.com/hacksprint21-s2-slides" target="_blank">Slides</a>
 - <a href="https://members.uclaacm.com/login" target="_blank">ACM Membership Attendance Portal</a>
+- <a href="https://docs.expo.io/get-started/installation/" target="_blank">Expo Installation</a>
+- <a href="https://code.visualstudio.com/download" target="_blank">Text Editor (VS Code)</a>
 
 ## What we'll be learning today
 
@@ -30,6 +32,16 @@
   - [Finished Demo](./final_files/RecipeDemo.js)
 - [Do-It-Yourself Activity](#diy-activity)
 
+## Viewing the Demos
+All the demos we will be going over today are in the repository. The finished examples are in the [final_files](./final_files) folder. If you want to actually see these in a project environment, go ahead and unzip the [final.zip](./final.zip) file into a directory of your choosing and then make sure you run `yarn` in the terminal before `expo start`. Then to see any of the finalized demos just replace the contents of the `App.js` file with the contents in one of the demo files.
+
+There is also a zip file with all the starter code. Today, many of the demos will have pre-built portions in the interest of saving time. If you would like these versions, you can unzip the [starter.zip](./starter.zip) file into your directory of choice and run the following:
+```bash
+cd starter
+yarn 
+expo start
+```
+Again you can then see the different examples we work with by replacing `App.js` with the contents of one of the demo files.
 ## Components In React Native
 
 Previously, we learned about what React Native is and how we can create amazing applications using it. Now, let's get into how React Native apps are made!
