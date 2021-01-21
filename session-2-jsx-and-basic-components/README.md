@@ -450,4 +450,4 @@ Ideas for what to make:
 
 Example - a recipes app:
 
-![Example App](./images/recipe-demo.jpg)
+<img src="./images/recipe-demo.jpg" width="400"/>
