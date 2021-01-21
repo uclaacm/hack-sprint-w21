@@ -56,7 +56,7 @@ Well, there's an image with the ACM Hack logo at the top of the page, text withi
 
 Image, Text, and the "Container" (which we'll later define as View) are some basic components of React Native! But what exactly are components? Components are like **building blocks** for all the content on your screen. Think of a Lego set that has many parts for a specific purpose that come together to build the final product for that set. Components work in that way. We can piece together components that have a specific purpose to create our application! As we saw with Facebook, there can be many components within even just one screen or page of an application!
 
-As basic components we can find these inside of a package called `react-native`. This package holds many prebuilt components provided by the React Native developers. As we saw in the Facebook example, there are a few basic components that are used quite often!
+These *basic components* in React Native can be found inside of a package called `react-native`. This package holds many prebuilt components provided by the React Native developers. As we saw in the Facebook example, basic components can be used quite often!
 
 - View: This is like the container from earlier! It created an empty container (a blank canvas) to put other components inside!
 - Text: Displays text
@@ -68,7 +68,7 @@ There are of course many basic components that can be found [here](https://docs.
 
 Components are pretty cool! But how do we actually use components in our code?
 
-Well first, we must **import** these components into our code. Importing lets us use components from other files. In the case of basic components, the developers of React Native have prebuilt components and provided it to use in the `react-native` package from earlier. Lucky us!
+Well first, we must **import** these components into our code. Importing lets us use components from other files. In the case of basic components, the developers of React Native have prebuilt components and provided them for use in the `react-native` package from earlier. Lucky us!
 
 ![Import Statement Syntax](./images/import-syntax.png)
 
@@ -84,9 +84,9 @@ And this is a perfectly valid thing to do! Now phrase is `Text` that says "Hacc 
 
 ![JSX Meme - "This Isn't Javascript!"](./images/jsx-kazookid.png)
 
-While it is not *exactly* JavaScript, it is a very fancy thing called JSX! JSX stands for JavaScript XML (which stands for Extensible Markup Language, which is just a fancy way of saying it's some information wrapped in tags that's easily readable for both humans and computers). The previous statement isn't allowed in JavaScript, but JSX lets us write code more efficiently, since we can directly put what we want inside of these components and use them effectively.
+While it is not *exactly* JavaScript, it is a very fancy thing called JSX! JSX stands for JavaScript XML (which stands for Extensible Markup Language, which is just a fancy way of saying it's some information wrapped in tags that's easily readable for both humans and computers). The previous statement isn't allowed in JavaScript, but JSX lets us write code more efficiently, since we can put exactly what we want inside of these components and use them effectively.
 
-JSX can be used within JavaScript functions as well! Here we see some function `HelloWorld` that will give us this text and display it when we call it.
+JSX can be used within JavaScript functions as well! Here we see some function `HelloWorld` that will give us this text and display "Hello, world!" when we use it.
 
 ```js
 const HelloWorld = () => { 
