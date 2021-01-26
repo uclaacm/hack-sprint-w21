@@ -16,9 +16,9 @@
 ## What we'll be learning today
 - [Custom Components](#TODO: alex)
 - [props](#TODO: alex)
-- [state](#state) TODO: @jody fix this
-- [Button/Touchable Opacity](#TODO)
-- [Text Input](#TODO)
+- [Button/Touchable Opacity](#button-and-touchableopacity)
+- [Component state](#component-state-using-usestate) 
+- [Text Input](#textinput)
 
 ## DIY Activity
 
@@ -154,7 +154,7 @@ function HeartCounter(props) {
 
 When we try to call `incrementLikeCount` by pressing
 a button (or some other way), we'll notice that the 
-rendered text doesn't change. 
+rendered(shown on the screen) text doesn't change. 
 
 If we check the logs in the console, we'll see that the value
 is changing. However, our `Text` will be stuck at the same
@@ -162,7 +162,7 @@ initial value.
 
 This is because React doesn't know that part of the component
 has updated. When React detects a component has updated (ex:
-the props passed are changed), React will re-render the
+the props passed are changed), React will re-render (redraw) the
 component to reflect the new data.
 
 However, in our code above, React doesn't detect the
@@ -276,7 +276,7 @@ the idea of changing the state is the same.
 There are a few important pointers about state to be aware
 of.
 
-1. state must be defined at the **top-level** of a function
+1. state must be defined at the **outermost-level** of a function
 (aka it cannot be inside any if-statments, loops, or in the 
 return value section.) 
   ```js
@@ -348,9 +348,9 @@ function App() {
     <View style={styles.container}>
       <Text>{text}</Text>
       <TextInput
-        style={styles.textinput}
+        style={styles.textInput}
         placeholder='type a message'
-        onChangeText={input => setText(input)}
+        onChangeText={(input) => setText(input)}
         value={text}
       />
     </View>
@@ -358,7 +358,7 @@ function App() {
 }
 
 const styles = StyleSheet.create({
-  textinput: {
+  textInput: {
     width: '100%',
     height: 40,
     padding: 8,
@@ -382,3 +382,8 @@ that you can use, check out the [React Native Docs for
 Text Input](https://reactnative.dev/docs/textinput)
 
 
+## Conclusion
+We've learned a lot today and its important to get practice
+with these new concepts to fully understand them. Check
+out the demo folders from this session above to try
+these out for yourself :)
