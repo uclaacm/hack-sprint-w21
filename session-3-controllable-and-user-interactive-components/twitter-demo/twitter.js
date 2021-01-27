@@ -9,30 +9,30 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, SafeAreaView } from 'react-native';
 import { Feather, Entypo,  } from '@expo/vector-icons'; 
 
-function TwitterPost({profileName, profileHandle, profilePic, postContent, postPic}) {
+function TwitterPost(props) {
     return(
         <View style={styles.container}>
         <View style={styles.profileContainer}>
         <Image 
         style={styles.profilePic}
         source={{
-            uri: profilePic
+            uri: props.profilePic
         }}
         />
         </View>
         
         <View style={styles.postContainer}>
             <View style={styles.title}>
-                <Text style={styles.profileName}>{profileName}</Text>
-                <Text style={styles.handleName}>{profileHandle}</Text>
+                <Text style={styles.profileName}>{props.profileName}</Text>
+                <Text style={styles.handleName}>{props.profileHandle}</Text>
             </View>
             <Text>
-            {postContent}
+            {props.postContent}
             </Text>
             <Image 
             style={styles.postImage}
             source={{
-                uri: postPic
+                uri: props.postPic
             }}
             />
             <View style={styles.icons}>
