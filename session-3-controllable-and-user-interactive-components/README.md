@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
 </details>
 
 
-<img src='./images/demo1.PNG' height='350px'/>
+<img src='./images/demo1.PNG' height='450px'/>
 
 Great! That's one Tweet down, let's hurry up and do the rest! Wait a minute. Do we just copy and paste all of the code above for each and every Tweet? No! That would not be a very smart move. So what do we do? We use something called functional components.
 
@@ -274,7 +274,7 @@ export default function App() {
 }
 ```
 
-<img src='./images/demo2.PNG' height='350px'/>
+<img src='./images/demo2.PNG' height='450px'/>
 
 Great, look at how clean our code looks now! But wait, if we want to make our posts different, we have to create a new functional component for every single post. That does not solve our initial problem of repeating code. So how do we achieve this? Through props. 
 
@@ -404,7 +404,7 @@ function TwitterPost(props) {
 }
 ```
 
-<img src='./images/demo3.PNG' height='350px'/>
+<img src='./images/demo3.PNG' height='450px'/>
 
 Looking good! We have managed to incorporate props into our custom components. The last issue that we need to fix is the scrolling. Casting ourselves back to session 2, we put all of our data into an array and then use a `<FlatList>`.
 
@@ -468,11 +468,11 @@ export default function App() {
 }
 ```
 
-<img src='./images/demo4.PNG' height='350px'/>
+<img src='./images/demo4.PNG' height='450px'/>
 
 And there we go! We have finished our Fwitter app. Honestly, it doesn't really look like Twitter at all but that's fine! That can be an exercise for you! I have actually gotten ahead and added a few of details that I didn't have time for today. You can have a look at the code in the [repo](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-3-controllable-and-user-interactive-components/twitter-demo). The final product looks something like this:
 
-<img src='./images/demo5.PNG' height='350px'/>
+<img src='./images/demo5.PNG' height='450px'/>
 
 
 ## Button and TouchableOpacity
