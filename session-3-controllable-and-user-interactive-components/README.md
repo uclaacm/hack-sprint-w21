@@ -43,7 +43,7 @@ Now that we've learned a bit about these components. Let's try analyzing Twitter
 
 
 
-Above, we have a screenshot of Twitter app. From what we can see so far, it seems to be wrapped some sort of `<SafeAreaView>` since the app doesn't seem to be intruding on other areas of the phone (eg. status bar). 
+Above, we have a screenshot of Twitter app. From what we can see so far, it seems to be wrapped in some sort of `<SafeAreaView>` since the app doesn't seem to be intruding on other areas of the phone (eg. status bar). 
 
 
 <img src='./images/twitter3.PNG' height='350px'/>
@@ -211,12 +211,12 @@ export default function App() {
 
 Voila! That's how we can create and use components in React. This method of grouping a bunch of components into one component is one of the key ideas of React. It is common convention to name the filename that contains the code for your component the same name as the component itself.
 
-If you are sharp, you will notice that we did to `TwitterPost` looks kind of similar to the line `export default function App() {` in `App.js`, and you are right! The `App()` function that we were working with all this time is actually a pre-provided functional component that holds all other components and is the final component that is displayed in our app.
+If you are sharp, you will notice that what we did to `TwitterPost` looks kind of similar to the line `export default function App() {` in `App.js`, and you are right! The `App()` function that we were working with all this time is actually a pre-provided functional component that holds all other components and is the final component that is displayed in our app.
 
 
 ### A note about importing and exporting in JavaScript
 
-One of the important takeaways from the previous section was how we exported and imported the components. And that is with the `export default MyComponent` and `import MyComponent from Pathname`. For now, all you should know is that this is one of the main ways of using code from another file in our project in JavaScript. If you want to make a component that you defined in one file, available in another file, you will need to export and import it. 
+One of the important takeaways from the previous section was how we exported and imported the components. And that is with the `export default MyComponent` and `import MyComponent from Pathname` syntax. For now, all you should know is that this is one of the main ways of using code from another file in our project in JavaScript. If you want to make a component that you defined in one file, available in another file, you will need to export and import it. 
 
 ### Applying this to the Demo
 
@@ -317,7 +317,7 @@ In fact, `style` and `source` are props to the `Image` component! This is how Re
 
 So how do we use props in our own custom components? Well, the syntax looks like this:
 
-In our `App.js` file, if we pass in properties to our `TwitterPost` component just like `Image` component like so:
+In our `App.js` file, if we pass in properties to our `TwitterPost` component like so:
 
 ```js
 <TwitterPost 
@@ -326,7 +326,7 @@ In our `App.js` file, if we pass in properties to our `TwitterPost` component ju
 />
 ```
 
-In our `TwitterPost.js` file, we modify our `TwitterPost` component:
+Then in our `TwitterPost.js` file, we will need to modify our `TwitterPost` component:
 
 ```js
 function TwitterPost(props) {
@@ -470,7 +470,7 @@ export default function App() {
 
 <img src='./images/demo4.PNG' height='450px'/>
 
-And there we go! We have finished our Fwitter app. Honestly, it doesn't really look like Twitter at all but that's fine! That can be an exercise for you! I have actually gotten ahead and added a few of details that I didn't have time for today. You can have a look at the code in the [repo](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-3-controllable-and-user-interactive-components/twitter-demo). The final product looks something like this:
+And there we go! We have finished our Fwitter app. Honestly, it doesn't really look like Twitter at all but that's fine! That can be an exercise for you! I have actually gone ahead and added a few of details that I didn't have time for today. You can have a look at the code in the [repo](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-3-controllable-and-user-interactive-components/twitter-demo). The final product looks something like this:
 
 <img src='./images/demo5.PNG' height='450px'/>
 
