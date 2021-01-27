@@ -39,23 +39,23 @@ Last week, we learned about various different **components** in React Native. Th
 Now that we've learned a bit about these components. Let's try analyzing Twitter and see what components it can be broken down into. 
 
 
-<img src='./images/twitter2.png' height='350px'/>
+<img src='./images/twitter2.PNG' height='350px'/>
 
 
 
 Above, we have a screenshot of Twitter app. From what we can see so far, it seems to be wrapped some sort of `<SafeAreaView>` since the app doesn't seem to be intruding on other areas of the phone (eg. status bar). 
 
 
-<img src='./images/twitter3.png' height='350px'/>
+<img src='./images/twitter3.PNG' height='350px'/>
 
 Going further down a layer, we can see that the screenshot can be broken down into a navigation bar and a home feed. The latter of which is probably made up of some sort of `<FlatList>` since we are able to scroll down to view all the twitter posts that appear on our home feed. 
 
-<img src='./images/twitter4.png' height='350px'/>
+<img src='./images/twitter4.PNG' height='350px'/>
 
 
 Diving deeper down into the home feed, we can see that it is made up of many "Tweets" stacked on top of each other. Each Tweet is independent from one another, meaning that even if you deleted a Tweet, or changed its contents, other Tweets won't be affected. This is an important way of thinking - and that is to compartmentalize each Tweet such that one doesn't affect the other. We will see later how this way of thinking is achieved through functional components.
 
-<img src='./images/twitter5.png' height='350px'/>
+<img src='./images/twitter5.PNG' height='350px'/>
 
 But first, lets break down a single Tweet and see what it is made up of. From the image above, we can see that we can break a Tweet into a series of `<View>` components, each containing `<Image>`, `<Text>`, and Icon components. Then we can deduce that these views are probably styled using some kind of flexbox to make our Tweet look like it does now. 
 
@@ -121,7 +121,7 @@ export default function App() {
 }
 ```
 
-<details open>
+<details closed>
 <summary>Click here to see the boring styling</summary>
 <br>
 
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
 </details>
 
 
-<img src='./images/demo1.png' height='350px'/>
+<img src='./images/demo1.PNG' height='350px'/>
 
 Great! That's one Tweet down, let's hurry up and do the rest! Wait a minute. Do we just copy and paste all of the code above for each and every Tweet? No! That would not be a very smart move. So what do we do? We use something called functional components.
 
@@ -274,7 +274,7 @@ export default function App() {
 }
 ```
 
-<img src='./images/demo2.png' height='350px'/>
+<img src='./images/demo2.PNG' height='350px'/>
 
 Great, look at how clean our code looks now! But wait, if we want to make our posts different, we have to create a new functional component for every single post. That does not solve our initial problem of repeating code. So how do we achieve this? Through props. 
 
@@ -404,7 +404,7 @@ function TwitterPost(props) {
 }
 ```
 
-<img src='./images/demo3.png' height='350px'/>
+<img src='./images/demo3.PNG' height='350px'/>
 
 Looking good! We have managed to incorporate props into our custom components. The last issue that we need to fix is the scrolling. Casting ourselves back to session 2, we put all of our data into an array and then use a `<FlatList>`.
 
@@ -468,11 +468,11 @@ export default function App() {
 }
 ```
 
-<img src='./images/demo4.png' height='350px'/>
+<img src='./images/demo4.PNG' height='350px'/>
 
 And there we go! We have finished our Fwitter app. Honestly, it doesn't really look like Twitter at all but that's fine! That can be an exercise for you! I have actually gotten ahead and added a few of details that I didn't have time for today. You can have a look at the code in the [repo](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-3-controllable-and-user-interactive-components/twitter-demo). The final product looks something like this:
 
-<img src='./images/demo5.png' height='350px'/>
+<img src='./images/demo5.PNG' height='350px'/>
 
 
 ## Button and TouchableOpacity
