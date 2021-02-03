@@ -12,6 +12,24 @@
 - [ACM Membership Attendance Portal](//TODO:link)
 
 ## What we'll be learning today
-//TODO
+- [What is Asynchronous Programming?]()
+- [Promises]()
+- [Async/Await]()
+- [API's and fetch()]()
+- [JSON]()
+- [useEffect()]()
+
+## What is Asynchronous Programming?
+
+## Promises
+
+## Async/Await
+
+## API's and fetch()
+
+## JSON
+
+## useEffect()
+
 
 
