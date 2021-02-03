@@ -15,9 +15,9 @@
 - [What is Asynchronous Programming?](#what-is-asynchronous-programming)
 - [Promises](#promises)
 - [Async/Await](#asyncawait)
-- [API's and fetch()](#apis-and-fetch
+- [API's and fetch()](#apis-and-fetch)
 - [JSON](#json)
-- [useEffect()](#useEffect
+- [useEffect()](#useEffect)
 
 ## What is Asynchronous Programming?
 
