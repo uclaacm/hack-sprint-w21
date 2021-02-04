@@ -10,7 +10,7 @@
 
 ### What is a stack navigator?
 
-<img src='./Desktop/tinder.png' height='350px'/>
+<img src='./images/tinder.png' height='350px'/>
 
 ### Stack navigator analogy
 A stack navigator is much like a stack of books. We can add a book to the top of our stack and also remove that book. These actions are just like navigating to a new active screen and then going back to the original screen by closing the active screen. Another way to think about this is with the stack data structure. 
@@ -19,7 +19,14 @@ A stack navigator is much like a stack of books. We can add a book to the top of
 ```
 createStackNavigator();
 ```
-Provides a basic way to transition
+* Provides a basic way to transition between screens
+* Accepts props such as name, component, etc
+
+```
+navigation.goBack();
+```
+* Close active screen and return to the one below on the stack
+* Function is called on navigation prop
 
 ## Tab Navigation Demo
 
