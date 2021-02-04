@@ -16,6 +16,25 @@
 
 ## What we'll be learning today
 
+- [Hacksprint Session 4: Intro to React Navigation](#hacksprint-session-4-intro-to-react-navigation)
+  - [Resources](#resources)
+  - [What we'll be learning today](#what-well-be-learning-today)
+  - [Stack Navigation](#stack-navigation)
+    - [What is a stack navigator?](#what-is-a-stack-navigator)
+    - [Stack navigator analogy](#stack-navigator-analogy)
+    - [Important functions](#important-functions)
+    - [Code Demo](#code-demo)
+  - [Tab Navigation](#tab-navigation)
+    - [What is a tab navigator?](#what-is-a-tab-navigator)
+    - [Important functions](#important-functions-1)
+    - [Code Demo](#code-demo-1)
+  - [Drawer Navigation](#drawer-navigation)
+  - [Nested Navigation](#nested-navigation)
+  - [Options](#options)
+    - [Header Styles](#header-styles)
+    - [Screen options](#screen-options)
+    - [Replacing tab bar text with icons](#replacing-tab-bar-text-with-icons)
+
 ## Stack Navigation
 
 ### What is a stack navigator?
