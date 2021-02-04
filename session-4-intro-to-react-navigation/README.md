@@ -19,6 +19,7 @@
 - [Hacksprint Session 4: Intro to React Navigation](#hacksprint-session-4-intro-to-react-navigation)
   - [Resources](#resources)
   - [What we'll be learning today](#what-well-be-learning-today)
+  - [Introduction](#introduction)
   - [Stack Navigation](#stack-navigation)
     - [What is a stack navigator?](#what-is-a-stack-navigator)
     - [Stack navigator analogy](#stack-navigator-analogy)
@@ -34,6 +35,32 @@
     - [Header Styles](#header-styles)
     - [Screen options](#screen-options)
     - [Replacing tab bar text with icons](#replacing-tab-bar-text-with-icons)
+
+## Introduction
+
+React Navigation is a library for routing and navigation in React Native apps. This means you can use it to switch between screens of your app.
+
+To install React Navigation:
+
+```
+expo install @react-navigation/native
+```
+
+Then install some dependencies:
+
+```
+expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+```
+
+There are more detailed instructions at the documentation here: https://reactnavigation.org/docs/getting-started
+
+You will also need to install navigator(s) depending on the type you use. For example, to install the stack navigator:
+
+```
+expo install @react-navigation/stack
+```
+
+If you ever get errors such as "Unable to resolve module", this means that you haven't installed the module yet.
 
 ## Stack Navigation
 
