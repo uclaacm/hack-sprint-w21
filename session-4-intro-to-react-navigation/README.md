@@ -6,14 +6,6 @@
 
 **Teachers**: [Christina Tong](https://github.com/christinatong01), [Kristie Lim](https://github.com/kristielim)
 
-## Resources
-
-- <a href="https://tinyurl.com/hacksprint21-s4-slides" target="_blank">Slides</a>
-- <a href="https://members.uclaacm.com/login" target="_blank">ACM Membership Attendance Portal</a>
-- <a href="https://docs.expo.io/get-started/installation/" target="_blank">Expo Installation</a>
-- <a href="https://code.visualstudio.com/download" target="_blank">Text Editor (VS Code)</a>
-- <a href="https://reactnavigation.org/docs/getting-started" target="_blank">React Navigation Documentation</a>
-
 ## What we'll be learning today
 
 - [Hacksprint Session 4: Intro to React Navigation](#hacksprint-session-4-intro-to-react-navigation)
@@ -35,6 +27,14 @@
     - [Header Styles](#header-styles)
     - [Screen options](#screen-options)
     - [Replacing tab bar text with icons](#replacing-tab-bar-text-with-icons)
+
+## Resources
+
+- <a href="https://tinyurl.com/hacksprint21-s4-slides" target="_blank">Slides</a>
+- <a href="https://members.uclaacm.com/login" target="_blank">ACM Membership Attendance Portal</a>
+- <a href="https://docs.expo.io/get-started/installation/" target="_blank">Expo Installation</a>
+- <a href="https://code.visualstudio.com/download" target="_blank">Text Editor (VS Code)</a>
+- <a href="https://reactnavigation.org/docs/getting-started" target="_blank">React Navigation Documentation</a>
 
 ## Introduction
 
@@ -231,6 +231,132 @@ function MyTabs() {
 My two screens for the stack navigator are indicated with Tab.Screen tag, and these are contained within Tab.Navigator tag. Lastly, I will export the function MyTabs import it within my App.js for it to display.
 
 ## Drawer Navigation
+
+### What is a drawer navigator?
+This navigator allows for toggling a menu or a drawer from one side of your smart phone. 
+
+<img src='./images/tinder.png' height='350px'/>
+
+### Important functions
+```js
+navigation.openDrawer();
+```
+* openDrawer function called on navigation prop!
+* Opens the drawer
+
+```js
+navigation.closeDrawer();
+```
+
+```js
+navigation.openDrawer();
+```
+
+```js
+createDrawerNavigator();
+```
+* Provides a way for your app to transition between screens via drawer
+
+### Important Prop
+
+```js
+drawerContent
+```
+* Prop for rendering content in drawer, like navigation items
+* Can customize this!
+
+Let's customize our drawerContent
+
+```js
+<DrawerContentScrollView {...props}>
+   <DrawerItemList {...props} />
+	   <DrawerItem
+		  label = “”
+		  onPress = etc
+	  />
+</DrawerContentScrollView>
+```
+Wait... what is that {...props}??
+* Don't worry too much about it at this point
+* The ellipses represent passing in all props from the component
+* Let us know if you have more questions
+
+### Code demo
+
+We will have two screens, one called Wilderness Explorer, and the other called Explorer Profile.
+
+Let's talk about our first screen, Wilderness Explorer (shown below).
+
+```js
+// drawer.js
+
+import React from 'react';
+import { StyleSheet, Text, View, Animated, Button } from 'react-native';
+import {
+    createDrawerNavigator,
+    DrawerContentScrollView,
+    DrawerItemList,
+    DrawerItem,
+  } from '@react-navigation/drawer';
+  
+function WildernessExplorer({ navigation }) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Wilderness Explorers Screen!</Text>
+        <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
+        <Button title="Toggle drawer" onPress={() => navigation.toggleDrawer()} />
+      </View>
+    );
+  }
+```
+We are containing a Text component and two Button components within a View. We are also passing in the navigation prop to this screen, so that we can call the openDrawer() and toggleDrawer() function. Within the Button, we have two props, one for the title of the button, and one for the onPress function. The title of the Button indicates what will show up on the Button in our UI. 
+
+Next, let's implement a simple version of the Profile screen (shown below).
+```js
+function Profile() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>My Explorer Profile</Text>
+      </View>
+    );
+  }
+```
+As you might notice, it is very similar to our other functions. I decided to keep this function simple in order to show case the other features!
+
+Alrighty, let's move into customizing our drawer content using the drawerContent prop and new JSX tags that must be imported.
+```js
+ function CustomDrawerContent(props) {
+    return (
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props} />
+        <DrawerItem
+          label="Close drawer"
+          onPress={() => props.navigation.closeDrawer()}
+        />
+        <DrawerItem
+          label="Toggle drawer"
+          onPress={() => props.navigation.toggleDrawer()}
+        />
+      </DrawerContentScrollView>
+    );
+  }
+```
+We want our drawer to contain a list of the props of our component, but we also want 2 additional drawer items (as indicated by <DrawerItem>) for toggle and closing the drawer. 
+
+Lastly, we will create a MyDrawer function to succinctly put all of these functions together. 
+```js
+  const Drawer = createDrawerNavigator();
+
+  function MyDrawer() {
+    return (
+      <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
+        <Drawer.Screen name="Wilderness Explorers" component={WildernessExplorer} />
+        <Drawer.Screen name="My Explorer Profile" component={Profile} />
+      </Drawer.Navigator>
+    ); 
+  }
+```
+Lastly, I will export the function MyDrawer it within my App.js for it to display. 
 
 ## Nested Navigation
 
