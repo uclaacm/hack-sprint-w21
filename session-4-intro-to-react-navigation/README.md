@@ -36,6 +36,10 @@ Let's talk about our first screen, Wilderness Explorer (shown below).
 ```
 // stack.js 
 
+import React from 'react';
+import { StyleSheet, Text, View, Animated, Button } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 function WildernessExplorer({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -87,5 +91,68 @@ function MyStack() {
 My two screens for the stack navigator are indicated with Stack.Screen tag, and these are contained within Stack.Navigator tag. Lastly, I will export the function MyStack and import it within my App.js for it to display.
 
 ## Tab Navigation 
+
+### What is a tab navigator?
+A tab navigator is probably the most commonly used navigation technique in React Native. 
+
+<img src='./images/tinder.png' height='350px'/>
+
+### Important functions
+```
+createBottomTabNavigator();
+```
+* Provides a basic way to transition between screens with the tab method
+* Accepts props such as name, component, etc
+* Very similar to the function for creating a stack navigator
+
+### Code Demo
+We will have two screens, one called Wilderness Explorer, and the other called Explorer Profile, just like we did the demo for stack navigation
+
+Let's talk about our first screen, Wilderness Explorer (shown below). 
+```
+// tab.js
+
+import React from 'react';
+import { StyleSheet, Text, View, Animated, Button } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+function WildernessExplorers() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Wilderness Explorers Screen!</Text>
+    </View>
+  );
+}
+```
+This function just deals with styling the screen.
+
+Now, onto our second screen, Profile (shown below).
+```
+// tab.js
+
+function Profile() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>My Explorer Profile Screen</Text>
+    </View>
+  );
+}
+```
+Again, this function just deals with styling the screen.
+
+Finally, we have to put these all together within a tab navigation container, so I will create one more function called MyTabs (shown below).
+```
+// tab.js
+
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Wilderness Explorers" component={WildernessExplorers} />
+      <Tab.Screen name="My Explorer Profile" component={Profile} />
+    </Tab.Navigator>
+  );
+}
+```
+My two screens for the stack navigator are indicated with Tab.Screen tag, and these are contained within Tab.Navigator tag. Lastly, I will export the function MyTabs import it within my App.js for it to display. 
 
 ## Drawer Navigation 
