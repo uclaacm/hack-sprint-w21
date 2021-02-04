@@ -95,7 +95,7 @@ My two screens for the stack navigator are indicated with Stack.Screen tag, and 
 ### What is a tab navigator?
 A tab navigator is probably the most commonly used navigation technique in React Native. 
 
-<img src='./images/tinder.png' height='350px'/>
+<img src='./images/ig.png' height='350px'/>
 
 ### Important functions
 ```
