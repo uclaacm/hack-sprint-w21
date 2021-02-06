@@ -1,4 +1,4 @@
-# Hacksprint Session 5: Asynchronous Programming and Component Life Cycle
+# Hacksprint Session 5: Asynchronous Programming and useEffect
 
 **Date**: February 10, 2021
 
