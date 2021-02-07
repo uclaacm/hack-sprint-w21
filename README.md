@@ -14,9 +14,9 @@ We hope all of you have a great time learning this quarter! Feel free to reach o
 
 - [Week 2: Introduction to React Native + JavaScript](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-1-intro-to-react-native-and-js)
 - [Week 3: Introduction to JSX and Basic Components](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-2-jsx-and-basic-components)
-- Week 4:
-- Week 5:
-- Week 6:
+- [Week 4: Controllable and User Interactive Components](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-3-controllable-and-user-interactive-components)
+- [Week 5: Introduction to React Navigation](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-4-intro-to-react-navigation)
+- [Week 6: Asynchronous Programming and useEffect](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-5-async-and-life-cycle)
 - Week 7: 
 - Week 8:
 - Week 9:
