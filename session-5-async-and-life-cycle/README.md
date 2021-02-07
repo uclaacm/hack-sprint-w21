@@ -26,6 +26,8 @@ You may not have realized it, but up until this point, you've been writing somet
 
 A more digestible way to think about it: all of the expressions in your code are waiting in line, but they have to wait their turn to be served! The result: each task in your program (no matter how long it takes) is executed one by one.
 
+<img src="./img/expression-line.png">
+
 And this is fine for a simple program where each task is completed super quickly! But what happens when a task is super resource intensive and takes a long time to complete? Well, if written synchronously, all the tasks that come after the resource hog will be stuck waiting for it to wrap up. This could potentially lead to a terrible UX, which we definitely don't want! How can we avoid that?
 
 ### Async in Practice
@@ -33,9 +35,10 @@ Enter async programming. Essentially what async programming allows us to do is a
 
 Imagine you're at the grocery store and you see this: 
 
-//TODO: insert picture of lines at grocery store (on left 3 carts filled with tons of stuff, on right nobody is in line)
+Two lines: to your left there are 3 carts filled with tons of stuff and to your right nobody is in line.
+<img src="./img/grocery-lines.png">
 
-Which line are you more likely to take? Obviously the empty one, right? On the left the shopper has all this garbage loaded into their cart and you have no idea how long it's going to take to scan each thing. If you get in line behind them, you could be waiting for hours. By taking the empty line, you save a lot of time! 
+Which line are you more likely to take? Obviously the empty one, right? On the left the shopper has all this garbage loaded into their carts and you have no idea how long it's going to take to scan each thing. If you get in line behind them, you could be waiting for hours. By taking the empty line, you save a lot of time! 
 
 Async solves the same problem. If there is ever some task that could take a long time, but you're not sure how long (say a network request) you don't want to freeze up your application while waiting for it to complete! Async allows us to execute more than one expression at a time, so we no longer have to wait for the intensive task to complete before moving onto other things. 
 
@@ -128,8 +131,8 @@ Say we want an object that represents a certain cryptocurrency. Each cryptocurre
 
 ```javascript
 dogecoin = {
-    price: 0.0592
-    change: 28.61
+    price: 0.0592,
+    change: 28.61,
 };
 ```
 
@@ -152,12 +155,12 @@ We can also have objects within objects!
 
 ```javascript
 dogecoin = {
-    price: 0.0592
+    price: 0.0592,
     tracker: {
-        day: 28.61
-        week: 102.15
-        month: 504.77
-        year: 2009.38
+        day: 28.61,
+        week: 102.15,
+        month: 504.77,
+        year: 2009.38,
     }
 };
 ```
@@ -179,12 +182,10 @@ Very often, it's useful to store these objects as string representations. This s
         "day": 28.61,
         "week": 102.15,
         "month": 504.77,
-        "year": 2009.39
+        "year": 2009.39,
         }
     }
 }
-
-
 ```
 
 Pretty similar, right? That's what makes JSON so convenient. 
@@ -216,7 +217,7 @@ Lately, the stock market and cryptos have been really popping off so I want to m
 
 I took the liberty of setting up some starter code so we can focus on just the async stuff. Feel free to download it and mess around!
 
-<img src="./robinpeople-starter.jpeg" height=400>
+<img src="./img/robinpeople-starter.jpeg" height=400>
 
 Obviously, we'll be dealing with the only investment that matters.
 
