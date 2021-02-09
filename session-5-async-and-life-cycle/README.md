@@ -40,7 +40,9 @@ Two lines: to your left there are 3 carts filled with tons of stuff and to your 
 
 Which line are you more likely to take? Obviously the empty one, right? On the left the shopper has all this garbage loaded into their carts and you have no idea how long it's going to take to scan each thing. If you get in line behind them, you could be waiting for hours. By taking the empty line, you save a lot of time! 
 
-Async solves the same problem. If there is ever some task that could take a long time, but you're not sure how long (say a network request) you don't want to freeze up your application while waiting for it to complete! Async allows us to execute more than one expression at a time, so we no longer have to wait for the intensive task to complete before moving onto other things. 
+Now imagine instead of shoppers waiting in line, we have tasks in our program waiting to be executed. We want each task to get going as quickly as possible, and we don't want to keep them waiting.
+
+Async solves this problem! If there is ever some task that could take a long time, but you're not sure how long (say a network request) you don't want to freeze up your application while waiting for it to complete! Async allows us to execute more than one expression at a time, so we no longer have to wait for the intensive task to complete before moving onto other things. 
 
 ## Promises
 Alright, so now that you know what asynchronous programming is, let's get into how you might actually use it in the context of a React Native app. 
