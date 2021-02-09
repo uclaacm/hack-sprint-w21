@@ -532,6 +532,9 @@ useEffect(() => {}, [price]);
 
 To make a notification, we call the function `Toast.show` with our message.
 
+> Note: `Toast` is provided by the library `react-native-toast-message` so we 
+> can create notification with the function call `.show()`.
+
 ```jsx
 useEffect(() => {
   Toast.show({ text1: 'Doge', text2: 'Price Changed' });
