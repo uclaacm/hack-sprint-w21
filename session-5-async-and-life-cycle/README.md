@@ -293,6 +293,16 @@ export default function CoinCoin() {
 }
 ```
 
+<figure align=center>
+
+<img src="img/cc-starter.png" width=500px>
+
+<figcaption>
+
+_What you should see at the beginning without writing a single line of code in CoinCoin_
+</figcaption>
+</figure>
+
 On the top of the file, we have declared a constant string that contains a
 URL. This is an API that returns you the current price of dogecoin in US$ and
 its percentage change since 24 hours ago. 
@@ -493,6 +503,17 @@ back to 0 again. This use case of `useEffect` really gives us an idea on how
 to understand `useEffect`. `useEffect` is a hook that is used to execute side
 effect on certain state changes.
 
+
+<figure align=center>
+
+<img src="img/cc-5press.gif" width=400px>
+
+<figcaption>
+
+_What CoinCoin should look like at this point_
+</figcaption>
+</figure>
+
 However, this approach has a problem. If you notice, our number of press is 
 set to 0 before our new number arrives. The reason is that we are calling 
 the async function `getAndSetData` but we are not waiting for it to complete 
@@ -547,6 +568,17 @@ the function is called and a message is shown to the user.
 > 🚩 Checkpoint: at this point, your CoinCoin app should notify you when the
 > price changes.
 
+
+
+<figure align=center>
+
+<img src="img/cc-price-change.gif" width=400px>
+
+<figcaption>
+
+_What you should see when price changes_
+</figcaption>
+</figure>
 
 ## Timing things and `useEffect` 
 
