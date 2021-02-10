@@ -24,7 +24,7 @@
 ### Motivation for Async
 You may not have realized it, but up until this point, you've been writing something called **synchronous** code. In synchronous code, each function or expression within your program is executed one at a time and in sequential order. 
 
-A more digestible way to think about it: all of the expressions in your code are waiting in line, but they have to wait their turn to be served! The result: each task in your program (no matter how long it takes) is executed one by one.
+A more digestible way to think about it: all of the expressions in your code are waiting in line, but they have to wait their turn to be executed! The result: each task in your program (no matter how long it takes) is executed one by one.
 
 <img src="./img/expression-line.png">
 
@@ -40,33 +40,54 @@ Two lines: to your left there are 3 carts filled with tons of stuff and to your 
 
 Which line are you more likely to take? Obviously the empty one, right? On the left the shopper has all this garbage loaded into their carts and you have no idea how long it's going to take to scan each thing. If you get in line behind them, you could be waiting for hours. By taking the empty line, you save a lot of time! 
 
-Async solves the same problem. If there is ever some task that could take a long time, but you're not sure how long (say a network request) you don't want to freeze up your application while waiting for it to complete! Async allows us to execute more than one expression at a time, so we no longer have to wait for the intensive task to complete before moving onto other things. 
+Now imagine instead of shoppers waiting in line, we have tasks in our program waiting to be executed. We want each task to get going as quickly as possible, and we don't want to keep them waiting.
+
+Async solves this problem! If there is ever some task that could take a long time, but you're not sure how long (say a network request) you don't want to freeze up your application while waiting for it to complete! Async allows us to execute more than one expression at a time, so we no longer have to wait for the intensive task to complete before moving onto other things. 
 
 ## Promises
 Alright, so now that you know what asynchronous programming is, let's get into how you might actually use it in the context of a React Native app. 
 
 ### Motivation for Promises
 
-Let's say we have a function `simulateIntensiveTask()` that takes some amount of time to complete. When the task is completed, we should see a message in the console. The return value of the function is how long the task took to complete! Let's add the following to `handlePress()` to demonstrate a common problem in asynchronous programming:
+Let's say we have a function `simulateIntensiveTask()` that takes some amount of time to complete. When the task is completed, we should see a message in the console. The return value of the function is how long the task took to complete! Let's add the following to `handlePress()` to demonstrate a common problem:
 
 ```javascript
 const handlePress = () => {
-    const seconds = simulateIntensiveTask();
+    simulateIntensiveTask();
 }
 ```
 
-As expected, the task takes a couple seconds to complete! Now let's try to use the seconds value that the function returns.
+When we click the button, our whole UI freezes up! If you look closely, you'll notice that React Native doesn't even realize we pressed the button until after the task is completed. This is terrible UX, and it's all happening because `simulateIntensiveTask()` is a synchronous function. As I explained before, in synchronous code each expression is executed one at a time so all expressions after our intensive task have to wait until they can get started! To emphasize that this is the case,
 
 ```javascript
 const handlePress = () => {
-    const seconds = simulateIntensiveTask();
-    console.log("Milliseconds: " + seconds * 1000);
+        const seconds = simulateIntensiveTask();
+        console.log("No more tasks left!");
+        console.log("Total milliseconds: " + 1000 * seconds);
 }
 ```
 
-But this results in something unexpected: why is the number of milliseconds NaN? And also, why is "The task took 3.32 seconds to complete. That was intense!" logged after the milliseconds log? Didn't we call `simulateIntensiveTask()` first? What is going on?
+As expected, the task takes a couple seconds to complete and the logs are only shown after the task is completed. Let's instead use an async function.
 
-Okay, I have to confess something to you. I've been lying. I treated `simulateIntensiveTask()` as a synchronous function, when really it's asynchronous! This new knowledge makes our weird outputs make a *lot* more sense. Since `simulateIntensiveTask()` is asynchronous, it doesn't hold up our program and allows for all of the expressions that come after it to be executed before the task is completed. This leads to a problem, though: we don't yet know our seconds value when we log the number of milliseconds! To try to get to the bottom of this, let's take a couple steps back and just log our seconds value.
+```javascript
+const handlePress = () => {
+    simulateIntensiveAsyncTask();
+}
+```
+
+Now our app doesn't freeze while waiting for the task to get completed, awesome! Let's make absolutely sure that our function is asynchronous.
+
+```javascript
+const handlePress = () => {
+        const seconds = simulateIntensiveAsyncTask();
+        console.log("No more tasks left!");
+        console.log("Total milliseconds: " + 1000 * seconds);
+}
+```
+
+But this results in something unexpected: why is the number of milliseconds NaN? And also, why is "The task took 3.32 seconds to complete. That was intense!" logged after the milliseconds log? Didn't we call `simulateIntensiveAsyncTask()` first? What is going on?
+
+Since `simulateIntensiveTask()` is asynchronous, which makes sense because our code is running out of order! The function doesn't freeze ours program and allows for all of the expressions that come after it to be executed before the task is completed. This leads to a problem, though: we don't yet know our seconds value when we log the number of milliseconds! To try to get to the bottom of this, let's take a couple steps back and just log our seconds value.
 
 ```javascript
 const handlePress = () => {
@@ -97,7 +118,7 @@ Going back to our `simulateIntensiveTask()` example, since (as I mentioned befor
 
 ```javascript
 const handlePress = () => {
-    simulateIntensiveTask().then(seconds => {
+    simulateIntensiveAsyncTask().then(seconds => {
         console.log(seconds);
     })
 }
@@ -111,7 +132,7 @@ Alright, awesome! Now everything works as expected.
 
 ```javascript
 const handlePress = async () => {
-    const seconds = await simulateIntensiveTask();
+    const seconds = await simulateIntensiveAsyncTask();
     console.log(seconds);
 }
 ```
@@ -213,21 +234,26 @@ const object = await result.json();
 Now, we can access our requested data. Let's show how you might do this in a real project.
 
 ### Demo
-Lately, the stock market and cryptos have been really popping off so I want to make an app that let's me keep track of my ~sound~ investments! Let's call it RobinPeople.
+Lately, the stock market and cryptos have been really popping off so I want to make an app that let's me keep track of my ~sound~ investments! Let's call it RobinPeople, *the people's dogecoin tracker.*
 
 I took the liberty of setting up some starter code so we can focus on just the async stuff. Feel free to download it and mess around!
 
-<img src="./img/robinpeople-starter.jpeg" height=400>
-
-Obviously, we'll be dealing with the only investment that matters.
-
-```javascript
-<Text>DOGE</Text>
-```
+<img src="./img/robinpeople-starter.png" >
 
 Let's make it so that when we press the update button, the price text is updated with the current price of dogecoin! We can do this using the fetch function. In order to get the current price, we're going to use an API from coingecko.com, a website that tracks cryptocurrency prices. 
 
-It can be accessed through the following link: ['https://api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=usd&include_24hr_change=true']('https://api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=usd&include_24hr_change=true')
+It can be accessed through the following link: [https://api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=usd&include_24hr_change=true]('https://api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=usd&include_24hr_change=true')
+
+If you open this URL in the browser, you will get something that looks like this:
+
+```json
+{
+  "dogecoin": {
+    "usd": 0.052405,
+    "usd_24h_change": 62.493060243475654
+  }
+}
+```
 
 ```javascript
 const dogeCoinApiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=usd&include_24hr_change=true';
