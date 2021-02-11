@@ -47,6 +47,11 @@ Async solves this problem! If there is ever some task that could take a long tim
 ## Promises
 Alright, so now that you know what asynchronous programming is, let's get into how you might actually use it in the context of a React Native app. 
 
+> If you are following along in this README, you can download the
+> `rpcc-starter.zip` file and unzip it to obtain a copy of the starter code.
+> Make sure you have `expo` installed. Start by running `npm i` or `yarn`. Then
+> start expo with `expo start`.
+
 ### Motivation for Promises
 
 Let's say we have a function `simulateIntensiveTask()` that takes some amount of time to complete. When the task is completed, we should see a message in the console. The return value of the function is how long the task took to complete! Let's add the following to `handlePress()` to demonstrate a common problem:
@@ -647,6 +652,9 @@ useEffect(() => {
 > 🚩 Checkpoint: at this point, your CoinCoin app should call the API once
 > every 10 seconds.
 
+If you want to check your code against ours, you can download the file `rpcc-finished.zip` 
+and unzip to see our version! 
+
 ## Other uses of `useEffect`
 
 Apart from making API calls, there are other common use cases of the
@@ -655,7 +663,6 @@ Apart from making API calls, there are other common use cases of the
 - Detect whether the user is in the current tab or not. See code snippet here: https://reactnavigation.org/docs/navigation-events/#navigationaddlistener
 - Used to construct and invoke animation in React Native. See example here: https://reactnative.dev/docs/animations#animated-api
 - We can make search bar suggestions more efficient, by constructing a debounce in hooks: https://hack.uclaacm.com/posts/fall2019/js-chats-3/#application-power-of-hooks-with-debouncing
-
 
 
 For those of you who has background in writing React class components, you
