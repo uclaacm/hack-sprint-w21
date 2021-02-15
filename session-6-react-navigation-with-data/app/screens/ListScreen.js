@@ -47,7 +47,6 @@ export default function ListScreen({ navigation, route }) {
         data={todos}
         renderItem={({ item, index }) => (
           <ListItem
-            key={index}
             title={item.title}
             done={item.done}
             toggleDone={() => {
@@ -58,6 +57,7 @@ export default function ListScreen({ navigation, route }) {
             goToDetails={() => navigation.navigate("List Item", item)}
           />
         )}
+        keyExtractor={(item, index) => index.toString()}
       />
     </SafeAreaView>
   );
