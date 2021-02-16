@@ -17,7 +17,7 @@ We hope all of you have a great time learning this quarter! Feel free to reach o
 - [Week 4: Controllable and User Interactive Components](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-3-controllable-and-user-interactive-components)
 - [Week 5: Introduction to React Navigation](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-4-intro-to-react-navigation)
 - [Week 6: Asynchronous Programming and useEffect](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-5-async-and-life-cycle)
-- Week 7: 
+- [Week 7: React Navigation with Data](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-6-react-navigation-with-data): 
 - Week 8:
 - Week 9:
 - Week 10: Project Showcase
