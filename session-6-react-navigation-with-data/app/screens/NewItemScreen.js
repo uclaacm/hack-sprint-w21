@@ -7,9 +7,25 @@ import {
   StyleSheet,
 } from "react-native";
 
-export default function NewItemScreen({ navigation }) {
+export default function NewItemScreen({ navigation, route }) {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
+  
+  // Adding a new Todo using AsyncStorage
+  const addTodo = async () => {
+    try {
+      // Add new todo
+      const newTodo = {
+        title: title,
+        details: details,
+        done: false,
+      };
+      navigation.navigate('To-do List', { todo: newTodo });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.label}>Title:</Text>
@@ -29,11 +45,11 @@ export default function NewItemScreen({ navigation }) {
         accessible={true}
         accessibilityLabel='Details of to-do list item'
       />
-      <Button title='Create' />
+      <Button title='Create' onPress={addTodo}/>
     </SafeAreaView>
   );
 }
-
+  
 const styles = StyleSheet.create({
   label: {
     fontSize: 20,
