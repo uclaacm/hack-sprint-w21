@@ -8,6 +8,9 @@
 
 ## Resources
 
+- [React Navigation Docs](https://reactnavigation.org/docs/params#passing-params-to-a-previous-screen)
+- [Example To-do List App from Stanford's CS47](https://snack.expo.io/@aabuhashem/a9e8d7)
+
 ## What we'll be learning today
 
 Today we'll be walking through step-by-step how you might create a To-do list app. We'll start from the very beginning and review everything we've learned so far.
@@ -111,18 +114,20 @@ const todos = [
 
 This array will be used in the `data` prop of the `FlatList`. Then let's render a `ListItem` in the `renderItem` prop.
 
-````js
+```js
 <FlatList
   data={todos}
-  renderItem={({ item }) => (
+  renderItem={({ item, index }) => (
     <ListItem title={item.title} done={item.done} />
   )}
+  keyExtractor={(item, index) => index.toString()}
 />
 ```
 
 ## Review state
 
 Why can't I do something like this?
+
 ```js
 function ListItem({ title, done }) {
   return (
@@ -137,7 +142,8 @@ function ListItem({ title, done }) {
   );
 }
 ```
-I can't change `done` to the opposite of `done` because `done` is a prop. In order to change `done`, I need to use *state* instead of props. I could have a state inside of `ListItem` that controls whether or not that list item is done.
+
+I can't change `done` to the opposite of `done` because `done` is a prop. In order to change `done`, I need to use _state_ instead of props. I could have a state inside of `ListItem` that controls whether or not that list item is done.
 
 ```js
 function ListItem({ title }) {
@@ -157,7 +163,25 @@ function ListItem({ title }) {
 
 This would appear to work, but something is actually a little wrong. If we put state inside of the `ListItem`, we don't change the `todos` array. So instead, we will keep `done` as a prop and instead, pass in a `toggleDone` prop function that will update the `todos` state.
 
-TODO: put the code for this here
+Change todos into state for the `ListScreen`.
+
+```js
+const [todos, setTodos] = useState([]);
+```
+
+Pass in a function that updates the `todos` to each `ListItem`.
+
+```jsx
+<ListItem
+  title={item.title}
+  done={item.done}
+  toggleDone={() => {
+    let newTodos = [...todos];
+    newTodos[index].done = !newTodos[index].done;
+    setTodos(newTodos);
+  }}
+/>
+```
 
 ## Review TextInput
 
@@ -173,7 +197,7 @@ import {
   StyleSheet,
 } from "react-native";
 
-export default function NewItemScreen() {
+export default function NewItemScreen({ navigation }) {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   return (
@@ -209,7 +233,8 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: 20,
     height: 40,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 0,
     borderColor: "grey",
     borderWidth: 1,
     margin: 16,
@@ -222,15 +247,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
 ```
 
 Nothing happens when you click the button right now.
 
-
 ## Review React Navigation
 
-Let's add the ListItemScreen:
+Let's add the `ListItemScreen`:
+
 ```js
 import React from "react";
 import { SafeAreaView, Text, StyleSheet } from "react-native";
@@ -273,6 +297,7 @@ const styles = StyleSheet.create({
 TODO: insert gif with desired navigation pattern
 
 Now let's add some navigation between the three screens.
+
 ```
 import React from "react";
 import { SafeAreaView } from "react-native";
@@ -296,10 +321,79 @@ export default function App() {
 }
 ```
 
+Add a button to the `ListScreen` to allow you to get to the `NewItemScreen`.
 
+```js
+<Button title='New Item' onPress={() => navigation.navigate("New Item")} />
+```
+
+Add a function to the `ListItem` that allows you to get to the `ListItemScreen`.
+
+```js
+<ListItem
+  title={item.title}
+  done={item.done}
+  toggleDone={() => {
+    let newTodos = [...todos];
+    newTodos[index].done = !newTodos[index].done;
+    setTodos(newTodos);
+  }}
+  goToDetails={() => navigation.navigate("List Item")}
+/>
+```
+
+Add a button to the `ListItem` and call the new `goToDetails` prop.
+
+```js
+import { AntDesign } from "@expo/vector-icons";
+
+function ListItem({ title, done, toggleDone, goToDetails }) {
+  return (
+    <TouchableOpacity style={styles.listItem} onPress={toggleDone}>
+      <View style={styles.listItemContent}>
+        <Text style={[styles.listItemTitle, done && styles.done]}>{title}</Text>
+        <AntDesign name='right' size={24} color='black' onPress={goToDetails} />
+      </View>
+    </TouchableOpacity>
+  );
+}
+```
+
+## Finally, let's pass data between the screens
+
+This is done using the second argument of `navigation.navigate`.
+
+```js
+() => navigation.navigate("List Item", item);
+```
+
+Recall that `item` is a Javascript object that looks like:
+
+```
+{
+  title: "Practice serve",
+  done: false,
+  details:
+    "Underhand: a serve in which the player strikes the ball below the waist instead of tossing it up and striking it with an overhand throwing motion. ",
+}
+```
+
+Then in `ListItemScreen`, we have access to that `item` object through the `route` object passed in props. `route` has a property called `params` that contains the parameters that we passed from the `ListScreen`.
+
+```js
+export default function ListItemScreen({ route }) {
+  const { title, done, details } = route.params;
+  return (
+    <SafeAreaView>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.done}>{done ? "Done" : "Not done yet"}</Text>
+      <Text style={styles.details}>{details}</Text>
+    </SafeAreaView>
+  );
+}
+```
 
 ## Challenges
 
 - Allow users to edit the list item from the list item screen.
 - Add due dates to the to-do list
-````
