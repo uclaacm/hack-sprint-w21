@@ -12,7 +12,7 @@ export default function NewItemScreen({ navigation, route }) {
   const [details, setDetails] = useState("");
   
   // Adding a new Todo using AsyncStorage
-  const addTodo = async () => {
+  const addTodo = () => {
     try {
       // Add new todo
       const newTodo = {

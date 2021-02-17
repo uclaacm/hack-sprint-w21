@@ -62,10 +62,9 @@ export default function ListScreen({ navigation, route }) {
   }
 
   // Update state and local storage with new todo
-  const addTodo = async (todo) => {
+  const addTodo = async (newTodo) => {
     try {
-      const curTodos = todos.slice();
-      const newTodos = [...curTodos, todo];
+      const newTodos = [...todos, newTodo];
       setTodos(newTodos);
       if (storageType === "async") {
         await AsyncStorage.setItem('todos', JSON.stringify(newTodos));
@@ -108,9 +107,9 @@ export default function ListScreen({ navigation, route }) {
               newTodos[index].done = !newTodos[index].done;
               setTodos(newTodos);
             }}
-            goToDetails={() => {
+            goToDetails={async () => {
               // Pass id to List Item screen
-              AsyncStorage.setItem(index.toString(), JSON.stringify(item))
+              await AsyncStorage.setItem(index.toString(), JSON.stringify(item))
               navigation.navigate("List Item", {id: index});
             }}
           />
