@@ -915,4 +915,4 @@ Although we have only highlighted two options for storage, there are other optio
 ## Challenges pt. 2
 
 - Add a "clear all" button that clears all of the currently stored entries within `AsyncStorage` and `SecureStore`
-- Have it so that the content slides up when you type in a `TextInput`, and the keyboard disappears when you click outside of the `TextInput`'s in `NewItemScreen` (hint: check out [KeyboardAvoidingView](https://rnfirebase.io))
+- Have it so that the content slides up when you type in a `TextInput`, and the keyboard disappears when you click outside of the `TextInput`'s in `NewItemScreen` (hint: check out [KeyboardAvoidingView](https://reactnative.dev/docs/keyboardavoidingview)
