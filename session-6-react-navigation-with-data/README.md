@@ -187,9 +187,11 @@ This will install what you need to get started on an Expo app.
 
 Now we're ready to make a To-do List app! What are some screens we might want? How about a list screen, list item screen, and create item screen.
 
-<img src="images/list.png">
-<img src="images/list-item.png">
-<img src="images/create-item.png">
+<div style="display: flex; flex-direction: row;">
+<img src="images/list.png" height="400px">
+<img src="images/list-item.png" height="400px">
+<img src="images/create-item.png" height="400px">
+</div>
 
 Apps usually have different folders to organize the code. This is better than keeping all your files in the top level folder or even more chaotic, all code in a single file. Let's set up a simple directory structure with a single folder called `screens`. You might want to create folders for shared constants (colors, sizes), assets (images, fonts), or [more](https://swairaq.medium.com/react-native-app-structure-f281e69d895d).
 
@@ -448,7 +450,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-<img src="images/app.gif">
+<img src="images/app.gif" height="400px">
 
 Now let's add some navigation between the three screens.
 
