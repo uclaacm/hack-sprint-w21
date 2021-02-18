@@ -17,30 +17,165 @@
 
 Today we'll be walking through step-by-step how you might create a To-do list app. We'll start from the very beginning and review everything we've learned so far.
 
-- [Getting Started](#getting-started)
-- [Object Destructuring](#object-destructuring)
-- Review
-  - [Review props](#review-props)
-  - [Review FlatList](#review-flatlist)
-  - [Review state](#review-state)
-  - [Review TextInput](#review-textinput)
-  - [Review React Navigation](#review-react-navigation)
-- [Passing Data](#finally-lets-pass-data-between-the-screens)
-- [Challenges pt. 1](#challenges-pt.-1)
-- More Review
+- [Hacksprint Session 6: React Navigation with Data](#hacksprint-session-6-react-navigation-with-data)
+  - [Resources](#resources)
+  - [What we'll be learning today](#what-well-be-learning-today)
+  - [Syntactic Sugar](#syntactic-sugar)
+    - [Object Destructuring](#object-destructuring)
+    - [Array Spread](#array-spread)
+    - [Optional Chaining](#optional-chaining)
+  - [Review](#review)
+    - [Getting started](#getting-started)
+    - [Review props](#review-props)
+    - [Review FlatList](#review-flatlist)
+    - [Review state](#review-state)
+    - [Review TextInput](#review-textinput)
+    - [Review React Navigation](#review-react-navigation)
+  - [Passing parameters between screens](#passing-parameters-between-screens)
+  - [Challenges pt. 1](#challenges-pt-1)
   - [Review asynchronous programming](#review-asynchronous-programming)
-  - [Review async/await](#review-async/await)
-  - [Review useEffect](#review-useEffect)
-- [try...catch](#try...catch)
-- [Local Storage](#local-storage)
+  - [Review async/await](#review-asyncawait)
+    - [Syntax](#syntax)
+  - [Review useEffect](#review-useeffect)
+    - [Syntax](#syntax-1)
+  - [try...catch](#trycatch)
+  - [Local Storage](#local-storage)
+    - [Motivation: Case 1](#motivation-case-1)
+    - [Motivation: Case 2](#motivation-case-2)
+    - [Definition](#definition)
   - [AsyncStorage](#asyncstorage)
+    - [Adding Data](#adding-data)
+    - [Fetching Data](#fetching-data)
+    - [Other Methods](#other-methods)
+    - [Using AsyncStorage](#using-asyncstorage)
     - [Demo AsyncStorage](#demo-asyncstorage)
   - [SecureStore](#securestore)
+    - [Motivation](#motivation)
+    - [Adding Data](#adding-data-1)
+    - [Fetching Data](#fetching-data-1)
+    - [Other Methods](#other-methods-1)
+    - [Using SecureStore](#using-securestore)
     - [Demo SecureStore](#demo-securestore)
-  - [AsyncStorage vs. SecureStore](#asyncstorage-vs.-securestore)
-- [Challenges pt. 2](#challenges-pt.-2)
+  - [AsyncStorage vs. SecureStore](#asyncstorage-vs-securestore)
+    - [Other Options](#other-options)
+  - [Challenges pt. 2](#challenges-pt-2)
 
-## Getting started
+## Syntactic Sugar
+
+Before getting started with today's content, let's talk a little bit about Javascript's newer syntax. These are pretty common to see in React, so we'll be going over them in case you see it out in the wild. Syntactic sugar is code syntax that is shorter or more concise than normal code syntax.
+
+### Object Destructuring
+
+Use object destructuring when you want to save properties of objects into variables of the same name. Take this example object:
+
+```js
+const episode = {
+  number: 17,
+  title: "The Iron Wall",
+  teams: ["Date Tech", "Karasuno"],
+};
+```
+
+Without object destructuring:
+
+```js
+const number = episode.number;
+const title = episode.title;
+const teams = episode.teams;
+```
+
+With object destructuring:
+
+```js
+const { number, title, teams } = episode;
+```
+
+Object destructuring is commonly applied to props.
+
+Without object destructuring:
+
+```js
+function Episode(props) {
+  return;
+  <View>
+    <Text>{props.title}</Text>
+    <Text>{props.number}</Text>
+  </View>;
+}
+```
+
+With object destructuring:
+
+```js
+function Episode({ title, number }) {
+  return;
+  <View>
+    <Text>{title}</Text>
+    <Text>{number}</Text>
+  </View>;
+}
+```
+
+### Array Spread
+
+Array spread, or the `...` operator, is a short way to copy the elements of an array into a second array. The alternative is to either use a loop to copy elements or built-in array methods such as `concat`.
+
+```js
+const arr = [1, 2, 3];
+
+const arr1 = [...arr]; // [1, 2, 3]
+
+const arr2 = [...arr, 4, 5]; // [1, 2, 3, 4, 5]
+
+const arr3 = [0, ...arr]; // [0, 1, 2, 3]
+```
+
+### Optional Chaining
+
+Use optional chaining to avoid errors that occur when you try to access keys on an object that is undefined. The optional chaining operator is `?.`.
+
+Without optional chaining:
+
+```js
+if (episode) {
+  return episode.title;
+} else {
+  return undefined;
+}
+```
+
+With optional chaining:
+
+```js
+return episode?.title;
+```
+
+Optional chaining is most useful when you need to extract nested properties.
+
+Without optional chaining:
+
+```js
+if (episode && episode.title) {
+  return episode.title.name;
+} else {
+  return undefined;
+}
+```
+
+With optional chaining:
+
+```js
+return episode?.title?.name;
+```
+
+If nothing in the chain is undefined, the value is returned.
+If anything in the chain is undefined, undefined is returned.
+
+## Review
+
+This part will walk through setting up the app from what we've learned in previous workshops.
+
+### Getting started
 
 First, make sure [Node](https://nodejs.org/en/download/) and [Expo](https://docs.expo.io/) are installed. Then to start a new app, run this command in your terminal:
 
@@ -52,11 +187,11 @@ This will install what you need to get started on an Expo app.
 
 Now we're ready to make a To-do List app! What are some screens we might want? How about a list screen, list item screen, and create item screen.
 
-TODO: insert screenshots of each completed screen
+<img src="images/list.png">
+<img src="images/list-item.png">
+<img src="images/create-item.png">
 
-Apps usually have different folders to organize the code. This is better than keeping all your files in the top level folder or even more chaotic, all code in a single file. Let's set up a simple directory structure. You might want to create folders for shared constants (colors, sizes), assets (images, fonts), or [more](https://swairaq.medium.com/react-native-app-structure-f281e69d895d).
-
-TODO: insert picture of directory structure
+Apps usually have different folders to organize the code. This is better than keeping all your files in the top level folder or even more chaotic, all code in a single file. Let's set up a simple directory structure with a single folder called `screens`. You might want to create folders for shared constants (colors, sizes), assets (images, fonts), or [more](https://swairaq.medium.com/react-native-app-structure-f281e69d895d).
 
 Then add the screen files with some filler code just to get started:
 
@@ -73,13 +208,7 @@ export default function ListScreen() {
 }
 ```
 
-## Object Destructuring
-
-In the examples below, I will be using a Javascript feature called "object destructuring." This is very common in Javascript but it can be a bit confusing when you first see it.
-
-TODO: fill in an object destructuring example here, also do one where the object is a parameter
-
-## Review props
+### Review props
 
 First let's review props. On my to-do list, I will want to have multiple list items. Each list item will have the same structure and styling, so it will be useful to break that out into a separate component. Then the content can be determined by props. Here I have two props: `title` and `done`. `title` is the text of the list item and `done` determines if the style should be crossed out or not. `done && styles.done` means that if `done` is true then the expression is `styles.done` otherwise it is nothing. This is a Javascript feature but very commonly found in React. Also notice here that I am pulling out the props in the parameters of the function here `function ListItem({ title, done }) {`. This is a shorthand so that you can just use `title` instead of `props.title`.
 
@@ -126,7 +255,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-## Review FlatList
+### Review FlatList
 
 These list items should be in a FlatList so that we can scroll through them. Let's review how to do that. First let's put the data that we want into an array:
 
@@ -149,7 +278,7 @@ This array will be used in the `data` prop of the `FlatList`. Then let's render 
 />
 ```
 
-## Review state
+### Review state
 
 Why can't I do something like this?
 
@@ -208,7 +337,7 @@ Pass in a function that updates the `todos` to each `ListItem`.
 />
 ```
 
-## Review TextInput
+### Review TextInput
 
 Now that we have our `ListScreen` complete, let's fill out the other screens too. In the `NewItemScreen`, we will need some text inputs to say what the new to-do list item will be.
 
@@ -276,7 +405,7 @@ const styles = StyleSheet.create({
 
 Nothing happens when you click the button right now.
 
-## Review React Navigation
+### Review React Navigation
 
 Let's add the `ListItemScreen`:
 
@@ -319,7 +448,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-TODO: insert gif with desired navigation pattern
+<img src="images/app.gif">
 
 Now let's add some navigation between the three screens.
 
@@ -384,9 +513,9 @@ function ListItem({ title, done, toggleDone, goToDetails }) {
 }
 ```
 
-## Finally, let's pass data between the screens
+## Passing parameters between screens
 
-This is done using the second argument of `navigation.navigate`.
+Finally, let's pass data between the screens. This is done using the second argument of `navigation.navigate`.
 
 ```jsx
 () => navigation.navigate("List Item", item);
@@ -418,6 +547,8 @@ export default function ListItemScreen({ route }) {
 }
 ```
 
+This is actually anti-pattern even though it does work. The recommended way is to only pass the id of a list item, and then in the `ListItemScreen`, read from the global store. This avoids duplication of data and will prevent bugs with inconsistent data.
+
 ## Challenges pt. 1
 
 - Allow users to edit the list item from the list item screen.
@@ -425,41 +556,41 @@ export default function ListItemScreen({ route }) {
 
 ## Review asynchronous programming
 
-In [last week's workshop](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-5-async-and-life-cycle), we dipped our toes into the world of asynchronous programming. In **asynchronous programming**, different tasks in your app can be run *at the same time*. It avoids blocking or freezing your app on one task, and your code can be run out of order in a faster and more efficient way. The way it accomplishes this is by starting a resource-intensive task, leaving that task to perform another one while we wait for it to finish, then coming back to that intensive task once it's done.
+In [last week's workshop](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-5-async-and-life-cycle), we dipped our toes into the world of asynchronous programming. In **asynchronous programming**, different tasks in your app can be run _at the same time_. It avoids blocking or freezing your app on one task, and your code can be run out of order in a faster and more efficient way. The way it accomplishes this is by starting a resource-intensive task, leaving that task to perform another one while we wait for it to finish, then coming back to that intensive task once it's done.
 
-Let's take a look at the following example, which showcases how *synchronous* (sequential) programming, as opposed to asynchronous programming, looks like:
+Let's take a look at the following example, which showcases how _synchronous_ (sequential) programming, as opposed to asynchronous programming, looks like:
 
 <img src="./images/synchronous-programming.png" alt="Synchronous programming performance" style="width: 500px;" />
 
-The flow of synchronous programming is something we might be more used to (time moves to the right). We run tasks *in order*, and we do not start the next task until the current task has run to completion. However, we can start to see how this is not the most efficient solution. For example, in the first block of time, we are downloading an image. Once we start the process of downloading an image, however, our app is completely idle, as it waits for the downloading process, which is separate from the app, to finish. Even though the app isn't doing anything, we are unable to start the next task, "Get data from API 1", until this current task is finished in synchronous programming. Although this entire process realistically will not take as long as 45 seconds as the diagram suggests (it's usually on the degree of milliseconds), it still goes to show that this solution is not optimal.
+The flow of synchronous programming is something we might be more used to (time moves to the right). We run tasks _in order_, and we do not start the next task until the current task has run to completion. However, we can start to see how this is not the most efficient solution. For example, in the first block of time, we are downloading an image. Once we start the process of downloading an image, however, our app is completely idle, as it waits for the downloading process, which is separate from the app, to finish. Even though the app isn't doing anything, we are unable to start the next task, "Get data from API 1", until this current task is finished in synchronous programming. Although this entire process realistically will not take as long as 45 seconds as the diagram suggests (it's usually on the degree of milliseconds), it still goes to show that this solution is not optimal.
 
 On the other hand, let's take a look at the same flow, but done asynchrously:
 
 <img src="./images/asynchronous-programming.png" alt="Asynchronous programming performance" style="width: 500px;" />
 
-Using the asynchronous flow, we are now able to *start* the process of downloading image, then jumping straight into another asynchronous task, "Get data from API 1", while the image is downloaded somewhere else. Then, once we start fetching the data from API 1, we can then jump into the task of getting data from API 2, and finally, rendering content, *all at the same time*. Using asynchronous flow, we are able to prevent the app from being idle at any point, constantly giving it work to do. And, as a result, this entire process now takes less than half of the time it used to.
+Using the asynchronous flow, we are now able to _start_ the process of downloading image, then jumping straight into another asynchronous task, "Get data from API 1", while the image is downloaded somewhere else. Then, once we start fetching the data from API 1, we can then jump into the task of getting data from API 2, and finally, rendering content, _all at the same time_. Using asynchronous flow, we are able to prevent the app from being idle at any point, constantly giving it work to do. And, as a result, this entire process now takes less than half of the time it used to.
 
 ## Review async/await
 
-In JavaScript, one way to work with asynchronous code is through the `async`/`await` syntax. Using this syntax, we are able to write asynchronous code in a synchronous (sequential) looking way, which essentially means that we avoid constantly wrapping our code in deeper and deeper curly braces. `async`/`await` provides us with a way to work with **Promises**, which are objects that implement asynchronous-type programming in JavaScript. Promises wrap around any asynchronous code, and they signify that we may not know *when* the surrounded code will finish, but when it *does*, we are able to extract its value.
+In JavaScript, one way to work with asynchronous code is through the `async`/`await` syntax. Using this syntax, we are able to write asynchronous code in a synchronous (sequential) looking way, which essentially means that we avoid constantly wrapping our code in deeper and deeper curly braces. `async`/`await` provides us with a way to work with **Promises**, which are objects that implement asynchronous-type programming in JavaScript. Promises wrap around any asynchronous code, and they signify that we may not know _when_ the surrounded code will finish, but when it _does_, we are able to extract its value.
 
 ### Syntax
 
-As you may remember from [last week's workshop](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-5-async-and-life-cycle), you *must* add `async` to whatever function you want to work with asynchronous code in using `async`/`await`, like so:
+As you may remember from [last week's workshop](https://github.com/uclaacm/hack-sprint-w21/tree/master/session-5-async-and-life-cycle), you _must_ add `async` to whatever function you want to work with asynchronous code in using `async`/`await`, like so:
 
-``` javascript
+```javascript
 const f = async () => {
-	// ... more code
-}
+  // ... more code
+};
 ```
 
-Once we have an `async` function, we can now use `await` to *extract* a value out of a Promise:
+Once we have an `async` function, we can now use `await` to _extract_ a value out of a Promise:
 
-``` javascript
+```javascript
 const f = async () => {
-	const value = await someAsyncTask(); // <-- returns a Promise
-	console.log(value);
-}
+  const value = await someAsyncTask(); // <-- returns a Promise
+  console.log(value);
+};
 ```
 
 After we use `await` and assign the result to a variable, we can use that variable just as we would any other JavaScript variable.
@@ -468,25 +599,25 @@ Notice how this almost looks like normal, sequential JavaScript, with the except
 
 ## Review useEffect
 
-We also spent some time last week going over `useEffect`.  `useEffect` is a React hook that takes in a function that performs **side effects**, which, in the context of React, perform computations and changes to variables or state *outside of* the variables, constants, or functions the function normally has access to. Note that in programming, we call the variables, constants, and functions that the function normally has access to the **scope** of the function. Phrased this way, side effects perform changes to variables or state *outside of the scope* of the function. Side effects are also effects we want to run in a consistent way *regardless* of how many times a component may potentially get re-rendered. An example of a side effect is fetching data asynchronously from an outside source. This is a side effect, and we want it to only be fetched once at the *beginning* of the component's life, as opposed to running it *every time* the component renders. Another example is when we update the UI after the component has been rendered. Since this is done after the fact, it is considered a side effect, and should be done inside of `useEffect`.
+We also spent some time last week going over `useEffect`. `useEffect` is a React hook that takes in a function that performs **side effects**, which, in the context of React, perform computations and changes to variables or state _outside of_ the variables, constants, or functions the function normally has access to. Note that in programming, we call the variables, constants, and functions that the function normally has access to the **scope** of the function. Phrased this way, side effects perform changes to variables or state _outside of the scope_ of the function. Side effects are also effects we want to run in a consistent way _regardless_ of how many times a component may potentially get re-rendered. An example of a side effect is fetching data asynchronously from an outside source. This is a side effect, and we want it to only be fetched once at the _beginning_ of the component's life, as opposed to running it _every time_ the component renders. Another example is when we update the UI after the component has been rendered. Since this is done after the fact, it is considered a side effect, and should be done inside of `useEffect`.
 
 ### Syntax
 
 The syntax for `useEffect` is as follows:
 
-``` javascript
+```javascript
 useEffect(() => {
-	// some computation w/ side effects
+  // some computation w/ side effects
 }, [variable]);
 ```
 
-`useEffect` takes in two parameters. The first parameter is a function (our *effect*) that contains the computation we want `useEffect` to run. The second parameter is optional, and it is an array that contains the list of variables to watch out for. If any of the variables in the array change, then `useEffect` will re-run the function. In the case of the example above, if the variable named `variable` (my creativity is limitless) changes, `useEffect` will run the function again and deal with the state change accordingly.
+`useEffect` takes in two parameters. The first parameter is a function (our _effect_) that contains the computation we want `useEffect` to run. The second parameter is optional, and it is an array that contains the list of variables to watch out for. If any of the variables in the array change, then `useEffect` will re-run the function. In the case of the example above, if the variable named `variable` (my creativity is limitless) changes, `useEffect` will run the function again and deal with the state change accordingly.
 
-The key to creating a `useEffect` that will only run *once* when the component comes to life is using an *empty array* as the second parameter:
+The key to creating a `useEffect` that will only run _once_ when the component comes to life is using an _empty array_ as the second parameter:
 
-``` javascript
+```javascript
 useEffect(() => {
-	// some computation w/ side effects
+  // some computation w/ side effects
 }, []);
 ```
 
@@ -500,12 +631,12 @@ So far, we have been using `async`/`await` assuming that everything in our asycn
 
 The syntax is as follows:
 
-``` javascript
+```javascript
 try {
-	const value = await someAsyncTask();
-	console.log(value);
+  const value = await someAsyncTask();
+  console.log(value);
 } catch (error) {
-	console.log(error);
+  console.log(error);
 }
 ```
 
@@ -513,23 +644,24 @@ Notice that `catch` takes in a parameter, which we have named `error` here, but 
 
 ## Local Storage
 
-### Motivation:  Case 1
+### Motivation: Case 1
 
 Now, onto some new material! Once we learn about the benefits of local storage, we can start making our To-do list app really cool.
 
 Firstly, why would we use Local Storage? In order to highlight its importance, let's say we are working with the following two functional components:
 
-``` javascript
+```javascript
 function Kageyama() {
-	const [ball, setBall] = useState('up');
-	// more code…
+  const [ball, setBall] = useState("up");
+  // more code…
 }
 
 function Hinata() {
-	if (ball === 'up') {  // ERROR!!
-		console.log('I am spiking the ball');
-	}
-	// more code...
+  if (ball === "up") {
+    // ERROR!!
+    console.log("I am spiking the ball");
+  }
+  // more code...
 }
 ```
 
@@ -537,31 +669,31 @@ This code won't work! `<Hinata />` is trying to check the value of the variable 
 
 How should we go about fixing this issue? One way we could solve this is by making `<Hinata />` the child component of `<Kageyama />`, and passing down `ball` as a prop.
 
-``` jsx
+```jsx
 function Kageyama({ navigation }) {
-	const [ball, setBall] = useState('up');
-	// more code…
-	return <Hinata ball={ball} />;
+  const [ball, setBall] = useState("up");
+  // more code…
+  return <Hinata ball={ball} />;
 }
 ```
 
 The problem with this is that we are forced to create a parent-child relationship between these two components, where the "parent" component is the one containing the "child" component. This is not that flexible of a solution, especially if these two components belong to two completely separate concerns in our app.
 
-Additionally, what if `ball` contained a *lot* more data, say, in an object?
+Additionally, what if `ball` contained a _lot_ more data, say, in an object?
 
-``` jsx
+```jsx
 function Kageyama() {
-	const [ball, setBall] = useState({
-		direction: 'up',
-		shape: 'sphere',
-		// and a bunch more… 
-	});
-	// more code…
-	return <Hinata ball={ball} />;
+  const [ball, setBall] = useState({
+    direction: "up",
+    shape: "sphere",
+    // and a bunch more…
+  });
+  // more code…
+  return <Hinata ball={ball} />;
 }
 ```
 
-In this case, we're working with a *lot* more data, and we're passing all of this redundant data into `<Hinata />` as well! This is quite a clunky way to approach passing data, and we should probably use a more elegant way to handle data between these two components.
+In this case, we're working with a _lot_ more data, and we're passing all of this redundant data into `<Hinata />` as well! This is quite a clunky way to approach passing data, and we should probably use a more elegant way to handle data between these two components.
 
 Note: we could also use React Navigation to navigate to `<Hinata />` instead, but the issues that arise from both approaches are similar, so we'll stick to the props example instead.
 
@@ -569,7 +701,7 @@ Ideally, we should have a storage mechanism that is separate from these two comp
 
 <img src="./images/local-storage.png" alt="Local storage example" style="width: 600px" />
 
-This storage must be *globally accessible*, meaning the data within it can be accessed anywhere in the app. This is, in fact, what local storage is!
+This storage must be _globally accessible_, meaning the data within it can be accessed anywhere in the app. This is, in fact, what local storage is!
 
 ### Motivation: Case 2
 
@@ -585,7 +717,7 @@ However, what if our app crashes, or our Expo server dies? Once the server becom
 
 My fansite!!! NOOOOOOO
 
-Ideally, we want our data to still be available no matter what may happen to our app or server. In other words, we want our app data to *persist*. For this, local storage comes to the rescue again!
+Ideally, we want our data to still be available no matter what may happen to our app or server. In other words, we want our app data to _persist_. For this, local storage comes to the rescue again!
 
 <img src="./images/local-storage-pt4.png" alt="Local storage example, lost data" style="width: 600px" />
 
@@ -593,17 +725,17 @@ With all of this established, let's finally take a look at what local storage ex
 
 ### Definition
 
-As showcased above, **Local Storage** is a storage mechanism that allows us to store *persistent* data *globally* across the app. No matter which component we are currently in, it has access to local storage, making it *global*. Local storage allows the data it contains to *persist*, meaning that no matter what happens to our app or server, the data will still remain available. Finally, local storage is a singular source of data, meaning we avoid duplicating any data unnecessarily. In React Native, there are different implementations of local storage, but the ones we will focus on today are `AsyncStorage` and `SecureStore`.
+As showcased above, **Local Storage** is a storage mechanism that allows us to store _persistent_ data _globally_ across the app. No matter which component we are currently in, it has access to local storage, making it _global_. Local storage allows the data it contains to _persist_, meaning that no matter what happens to our app or server, the data will still remain available. Finally, local storage is a singular source of data, meaning we avoid duplicating any data unnecessarily. In React Native, there are different implementations of local storage, but the ones we will focus on today are `AsyncStorage` and `SecureStore`.
 
 ## AsyncStorage
 
-As its name suggests, `AsyncStorage` is an *asynchronous* implementation of local storage, which means that the interface we use to add and fetch data will all be done asynchronously. It uses a key-value storage system. You may be more familiar with the key-value system within the context of JavaScript objects:
+As its name suggests, `AsyncStorage` is an _asynchronous_ implementation of local storage, which means that the interface we use to add and fetch data will all be done asynchronously. It uses a key-value storage system. You may be more familiar with the key-value system within the context of JavaScript objects:
 
-``` javascript
+```javascript
 const obj = {
-  name: 'Eugene',
+  name: "Eugene",
   age: 20,
-}
+};
 ```
 
 Here, `name` and `age` are the keys (properties), and `'Eugene'` and `20` are the values associated with those keys, respectively. `AsyncStorage` uses something very similar - you use a key (property) to obtain the value associated with that key. When you add data to the storage, you must include both the key and the value associated with that key.
@@ -612,12 +744,12 @@ Here, `name` and `age` are the keys (properties), and `'Eugene'` and `20` are th
 
 In order to add data using `AsyncStorage`, we use the `setItem()` method. `setItem()` takes two parameters: the key, which is a string, and the value.
 
-``` javascript
+```javascript
 try {
-	await AsyncStorage.setItem('ball', 'up');
+  await AsyncStorage.setItem("ball", "up");
 } catch (error) {
-	console.log(error);
-	// error adding data
+  console.log(error);
+  // error adding data
 }
 ```
 
@@ -629,14 +761,14 @@ Once we run this code, our storage will now contain an entry for 'ball', the val
 
 To fetch data that we have added into `AsyncStorage`, we use the `getItem()` method. `getItem()` takes one parameter, which is the string key. Once `await`-ed, it `getItem()` will either return the value associated with that key, or `null` if that key does not exist within storage.
 
-``` javascript
+```javascript
 try {
-	const value = await AsyncStorage.getItem('ball');
-	if (value !== null) {
-		console.log(value);
-	}
+  const value = await AsyncStorage.getItem("ball");
+  if (value !== null) {
+    console.log(value);
+  }
 } catch (error) {
-	console.log(error); // error fetching value
+  console.log(error); // error fetching value
 }
 ```
 
@@ -648,13 +780,13 @@ Although we only went over `setItem()` and `getItem()` here, there are more meth
 
 In order to use `AsyncStorage`, we must first install the JavaScript code that implements it. The command for this is `npm install @react-native-async-storage/async-storage`. Once this code is installed, we can now import it into the file we use it in using the line `import AsyncStorage from '@react-native-async-storage/async-storage';`.
 
-### Demo AsyncStorage 
+### Demo AsyncStorage
 
-Now that we are imbued with the *power* of `AsyncStorage`, let's make some improvements to our To-do list app!
+Now that we are imbued with the _power_ of `AsyncStorage`, let's make some improvements to our To-do list app!
 
 Recall that we added this code to be able to navigate from our `ListScreen` to our `ListItemScreen` from each of our To-dos:
 
-``` javascript
+```javascript
 goToDetails={() => {
   navigation.navigate("List Item", item);
 }}
@@ -662,9 +794,9 @@ goToDetails={() => {
 
 Here, we're passing in the entire item object, which contains a lot of info! In order to avoid working with redundant data, we should instead use `AsyncStorage` to store the data in a singular location, which can then be used across our app. Let's have our key be the `index` parameter obtained by FlatList, which is just a number and is a great candidate for a key because it is unique for each To-do item.
 
-Let's update our `goToDetails()` function so that it first sets the To-do item in `AsyncStorage` *before* it navigates to the `ListItemScreen`.
+Let's update our `goToDetails()` function so that it first sets the To-do item in `AsyncStorage` _before_ it navigates to the `ListItemScreen`.
 
-``` jsx
+```jsx
 goToDetails={async () => {
   // Pass id to List Item screen
   await AsyncStorage.setItem(index.toString(), JSON.stringify(item))
@@ -676,13 +808,13 @@ Note here that we use the JavaScript built-in function for numbers, `toString()`
 
 As we can see, this newly updated version of `goToDetails()` first sets a new entry in `AsyncStorage` for this To-do item, using the string-ified index as a key, and a JSON representation of our item as the value. It then navigates the same way as before, with the exception that the only data that is now passed through the parameter is the `id` key, which we set to be equal to the `index` (the choice of the name `id` is arbitrary - it can be named anything you want). Observe that because `setItem()` is asynchronous, I `await` it, and I added `async` before the function accordingly.
 
-With this update, we are now using `AsyncStorage` and saving on a lot of data being passed between screens, since the only thing being passed now is a single number. 
+With this update, we are now using `AsyncStorage` and saving on a lot of data being passed between screens, since the only thing being passed now is a single number.
 
 Now, let's tackle the next step, which is updating our `ListItemScreen` to fetch the data in `AsyncStorage` instead. We want this process to only be done once when the component comes into existence, and it is performing a side effect, so we will put it in a `useEffect`.
 
 In `ListItemScreen`:
 
-``` jsx
+```jsx
 const { id } = route.params; // <-- no longer looking for title, details, and done
 const [item, setItem] = useState({});
 
@@ -698,7 +830,7 @@ const fetchTodo = async () => {
 
 useEffect(() => {
   fetchTodo();
-}, [])
+}, []);
 ```
 
 Here, we have defined a new state variable `item`, which will eventually hold the item value. We use `await` to extract the value out of the result of `AsyncStorage.getItem(id.toString())`, which is fetching the value associated to our key. Once we have that value, we use `setItem()` to update the state of our `item`.
@@ -709,7 +841,7 @@ Once we have done this, we need to update the rest of our code, since `title`, `
 
 In `ListItemScreen`:
 
-``` jsx
+```jsx
 return (
   <SafeAreaView>
     <Text style={styles.title}>{item.title}</Text>
@@ -725,7 +857,7 @@ Let's now tackle the process of adding a new To-do item in `NewItemScreen`, whic
 
 The first thing we'll do is add an `onPress` to our "Create" button. This `onPress` will call a function named `addTodo()`, which we will define as so in `NewItemScreen`:
 
-``` jsx
+```jsx
 // Adding a new Todo using AsyncStorage
 const [title, setTitle] = useState("");
 const [details, setDetails] = useState("");
@@ -748,19 +880,19 @@ const addTodo = () => {
 </SafeAreaView>
 ```
 
-Note: "..." is used as a way to omit all the other code that remains the same in between. 
+Note: "..." is used as a way to omit all the other code that remains the same in between.
 
-Here, `title` and `details` are state variables tied to our `TextInput` components. Once the "Create" button is pressed, the first thing we do is create a JavaScript object that has the same format as the rest of the To-do items we have seen. `done` is set to `false` initially, since we don't want our To-do to have already been To-done. Once we have created this object, we navigate back to our  `ListScreen` using `navigation.navigate()`, passing in this new To-do item as a parameter.
+Here, `title` and `details` are state variables tied to our `TextInput` components. Once the "Create" button is pressed, the first thing we do is create a JavaScript object that has the same format as the rest of the To-do items we have seen. `done` is set to `false` initially, since we don't want our To-do to have already been To-done. Once we have created this object, we navigate back to our `ListScreen` using `navigation.navigate()`, passing in this new To-do item as a parameter.
 
 We have now navigated back to our `ListScreen` with this new To-do item, which is accessible using route params as `route.params.todo`. But how exactly do we let `ListScreen` know that it should update its To-do list in order to display this new item? We can use `useEffect` to watch for when this variable changes and run some code accordingly!
 
 Back in `ListScreen`:
 
-``` jsx
+```jsx
 useEffect(() => {
   if (route.params?.todo) {
-      addTodo(route.params.todo);
-	}
+    addTodo(route.params.todo);
+  }
 }, [route.params?.todo]);
 
 // Update state and local storage with new todo
@@ -768,7 +900,7 @@ const addTodo = async (newTodo) => {
   try {
     const newTodos = [...todos, newTodo];
     setTodos(newTodos);
-    await AsyncStorage.setItem('todos', JSON.stringify(newTodos));
+    await AsyncStorage.setItem("todos", JSON.stringify(newTodos));
   } catch (e) {
     console.log(e);
   }
@@ -783,19 +915,19 @@ If we try to run our app now, we should be able to successfully create a new To-
 
 In `ListScreen`:
 
-``` jsx
+```jsx
 useEffect(() => {
   fetchExistingTodos();
 }, []);
 
 // Fetch all existing todo's in local storage
 const fetchExistingTodos = async () => {
-  const existingTodos = JSON.parse(await AsyncStorage.getItem('todos'));
-  
+  const existingTodos = JSON.parse(await AsyncStorage.getItem("todos"));
+
   if (existingTodos) {
     setTodos(existingTodos);
-  } 
-}
+  }
+};
 ```
 
 Our `useEffect` calls a function `fetchExistingTodos()`, which fetches the value associated with the same key as before, "todos". Once the value has been obtained and we convert it into a normal JavaScript object using `JSON.parse()`, we set the `todos` state to this object so that our To-do list displays all of the to-dos we have created persistently.
@@ -806,13 +938,13 @@ Now, if you add a new To-do item and try to close the app or the server and rest
 
 ### Motivation
 
-We have now taken a look at `AsyncStorage` and its ability to maintain globally accessible and persistent data. For most use cases, `AsyncStorage` will work fine. However, one important thing to note about `AsyncStorage` is that it stores all of its data in *plain text*. This means that if opened, it is immediately readable to humans. Let's say, however, that we are keeping track of this set of data in our storage:
+We have now taken a look at `AsyncStorage` and its ability to maintain globally accessible and persistent data. For most use cases, `AsyncStorage` will work fine. However, one important thing to note about `AsyncStorage` is that it stores all of its data in _plain text_. This means that if opened, it is immediately readable to humans. Let's say, however, that we are keeping track of this set of data in our storage:
 
 <img src="./images/async-storage.png" alt="async storage plaintext password" style="width: 600px;" />
 
 Did you spot the problem? We have stored a `password` key, and the value of the password is exposed to all of us and is completely readable! This is not secure at all, and if someone with not the best intentions were to take a peak at our storage, that would be bad news for our users.
 
-In order to protect more sensitive information, we need a different solution. One that *encrypts* our data, which is a process that makes the information not readable to humans. Such a solution would look something like this:
+In order to protect more sensitive information, we need a different solution. One that _encrypts_ our data, which is a process that makes the information not readable to humans. Such a solution would look something like this:
 
 <img src="./images/secure-store.png" alt="securestore encrypted password" style="width: 600px;" />
 
@@ -824,12 +956,12 @@ This is in fact `SecureStore`'s strength! `SecureStore` is a globally accessible
 
 In order to add data using `SecureStore`, we use the `setItemAsync()` method. `setItemAsync() ` is almost exactly the same as `setItem()` from `AsyncStorage`: it takes two parameters: the key, which is a string, and the value.
 
-``` javascript
+```javascript
 try {
-	await SecureStore.setItemAsync('ball', 'up');
+  await SecureStore.setItemAsync("ball", "up");
 } catch (error) {
-	console.log(error);
-	// error adding data
+  console.log(error);
+  // error adding data
 }
 ```
 
@@ -841,14 +973,14 @@ Once we run this code, our storage will now contain an entry for 'ball', the val
 
 To fetch data that we have added into `SecureStore`, we use the `getItemAsync()` method. `getItemAsync()` takes one parameter, which is the string key. Once `await`-ed, it `getItemAsync()` will either return the value associated with that key, or `null` if that key does not exist within storage.
 
-``` javascript
+```javascript
 try {
-	const value = await SecureStore.getItemAsync('ball');
-	if (value !== null) {
-		console.log(value);
-	}
+  const value = await SecureStore.getItemAsync("ball");
+  if (value !== null) {
+    console.log(value);
+  }
 } catch (error) {
-	console.log(error); // error fetching value
+  console.log(error); // error fetching value
 }
 ```
 
@@ -866,11 +998,11 @@ Since the interface with `SecureStore` is very similar to the [demo for `AsyncSt
 
 Adding data, in `ListScreen.js`:
 
-``` jsx
+```jsx
 useEffect(() => {
   if (route.params?.todo) {
-      addTodo(route.params.todo);
-	}
+    addTodo(route.params.todo);
+  }
 }, [route.params?.todo]);
 
 // Update state and local storage with new todo
@@ -878,7 +1010,7 @@ const addTodo = async (newTodo) => {
   try {
     const newTodos = [...todos, newTodo];
     setTodos(newTodos);
-    await SecureStore.setItemAsync('todos', JSON.stringify(newTodos)); // new!
+    await SecureStore.setItemAsync("todos", JSON.stringify(newTodos)); // new!
   } catch (e) {
     console.log(e);
   }
@@ -887,22 +1019,22 @@ const addTodo = async (newTodo) => {
 
 Fetching data, in `ListScreen.js`:
 
-``` jsx
+```jsx
 useEffect(() => {
   fetchExistingTodos();
 }, []);
 
 // Fetch all existing todo's in local storage
 const fetchExistingTodos = async () => {
-  const existingTodos = JSON.parse(await SecureStore.getItemAsync('todos')); // new!
-  
+  const existingTodos = JSON.parse(await SecureStore.getItemAsync("todos")); // new!
+
   if (existingTodos) {
     setTodos(existingTodos);
-  } 
-}
+  }
+};
 ```
 
-As you probably already guessed, the syntax is *very* similar.
+As you probably already guessed, the syntax is _very_ similar.
 
 ## AsyncStorage vs. SecureStore
 
