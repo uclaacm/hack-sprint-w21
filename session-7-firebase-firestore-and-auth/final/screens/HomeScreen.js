@@ -62,7 +62,7 @@ function HomeScreen({ navigation }) {
         <SafeAreaView style={styles.container}>
              <Text style={styles.title}>Welcome to Fireside Chats 🔥</Text>
              <TouchableOpacity onPress={handleLogin}>
-                 <Text>Login with Google</Text>
+                 <Text>Login</Text>
              </TouchableOpacity>
              <TouchableOpacity onPress={handleLogout}>
                  <Text>Logout</Text>
