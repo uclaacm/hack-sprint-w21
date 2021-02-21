@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { 
     SafeAreaView,
-    Keyboard,
     View,
     TouchableOpacity,
     StyleSheet,
@@ -28,20 +27,21 @@ const styles = StyleSheet.create({
 function HomeScreen({ navigation }) {
     useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
-            const uid = user.uid;
-            try {
-                await AsyncStorage.setItem('user', uid);
-            } catch (e) {
-                console.log(e);
-            }
-            
+            if (user) {
+                const uid = user.uid;
+                try {
+                    await AsyncStorage.setItem('user', uid);
+                } catch (e) {
+                    console.log(e);
+                }
+                navigation.navigate('Fireside Chats');
+            } 
         })
     }, [])
 
     const handleLogin = async () => {
         try {
             await auth.signInAnonymously();
-            navigation.navigate('Fireside Chats');
         } catch (e) {
             console.log(e); 
         }
