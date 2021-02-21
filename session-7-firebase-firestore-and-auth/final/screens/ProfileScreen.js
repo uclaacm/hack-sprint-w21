@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     SafeAreaView,
     KeyboardAvoidingView,
@@ -11,9 +11,45 @@ import {
     TouchableWithoutFeedback,
     StyleSheet 
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { db } from '../firebase/config';
 
 function ProfileScreen() {
     const [name, setName] = useState('');
+    const getDisplayName = async () => {
+        try {
+            const displayName = await AsyncStorage.getItem('displayName');
+            setName(displayName);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getDisplayName();
+    }, []);
+
+    const updateDisplayName = async (name) => {
+        try {
+            const id = await AsyncStorage.getItem('user');
+            const query = db.collection('chatroom').where('uid', '==', id);
+            const querySnapshot = await query.get();
+            querySnapshot.forEach(async (doc) => {
+                try {
+                    await db.collection('chatroom').doc(doc.id).update({
+                        displayName: name
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+
+            await AsyncStorage.setItem('displayName', name);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const handleChange = (update) => {
         setName(update);
@@ -21,6 +57,7 @@ function ProfileScreen() {
 
     const handleSubmit = () => {
         // TODO: Allow updating of display name via Firebase
+        updateDisplayName(name);
     }
 
     return (
