@@ -18,9 +18,38 @@ import ChatMessage from '../components/ChatMessage';
 
 function ChatScreen() {
     const CURRENT_USER = 0;
-    const [message, setMessage] = useState('');
+    const [messageText, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
+    const addNewMessage = async (uid) => {
+        try { 
+            const docRef = await db.collection('chatroom').add({
+                uid,
+                messageText: message,
+                displayName: 'Miles Wu',
+                photoURL: null,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            console.log("Document written with ID: " + docRef.id);
+        } catch (error) {
+            console.log(error)
+        }
+
+        /* Pre-firebase implementation
+        setMessages((prev) => {
+            return [
+                {
+                    uid: CURRENT_USER,
+                    messageId: prev[0].messageId + 1,
+                    messageText,
+                    displayName: 'Miles',
+                    photoURL: null
+                },
+                ...prev
+            ];
+        }); 
+        */
+    }
 
     const getNewMessages = async () => {
         try {
@@ -42,63 +71,40 @@ function ChatScreen() {
         } catch (error) {
             console.log(error);
         }
+
+        /* Pre-firebase implementation
+        setMessages([
+            {
+                uid: 1,
+                name: 'The World',
+                messageId: 1,
+                message: 'Hello...'                 
+            },
+            {
+                uid: 0,
+                name: 'Me',
+                messageId: 0,
+                message: 'Hello, World!'             
+            }
+        ]); 
+        */
     }
 
     useEffect(() => {
-
+        getNewMessages();
         // Gets new messages every ten seconds
         // setInterval(() => {
         //     getNewMessages();
         // }, 1000 * 10);
-
     }, [])
-
-    // useEffect(() => {
-    //     setMessages([
-    //         {
-    //             uid: 1,
-    //             name: 'The World',
-    //             messageId: 1,
-    //             message: 'Hello...'                 
-    //         },
-    //         {
-    //             uid: 0,
-    //             name: 'Me',
-    //             messageId: 0,
-    //             message: 'Hello, World!'             
-    //         }
-    //     ]);
-    // }, [])
     
     const handleChange = (update) => {
         setMessage(update);
     }
 
     const handleSend = async () => {
-        setMessages((prev) => {
-            return [
-                {
-                    uid: CURRENT_USER,
-                    messageId: prev[0].messageId + 1,
-                    message
-                },
-                ...prev
-            ];
-        });
+        addNewMessage(CURRENT_USER);
         setMessage('');
-
-        try { 
-            const docRef = await db.collection('chatroom').add({
-                uid: CURRENT_USER,
-                messageText: message,
-                displayName: 'Miles Wu',
-                photoURL: null,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            console.log("Document written with ID: " + docRef.id);
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     return (
@@ -130,15 +136,15 @@ function ChatScreen() {
                         <TextInput 
                             placeholder="Aa" 
                             style={styles.messageInput} 
-                            value={message}
+                            value={messageText}
                             onChangeText={handleChange}
                         />
                         <TouchableOpacity
                             onPress={handleSend}
                             style={styles.sendBtn}
-                            disabled={message === ''}
+                            disabled={messageText === ''}
                         >
-                            <FontAwesome name="send" size={24} color={message ? "#ee6123" : 'gray'} />
+                            <FontAwesome name="send" size={24} color={messageText ? "#ee6123" : 'gray'} />
                         </TouchableOpacity>
                     </View>
                 </View>
