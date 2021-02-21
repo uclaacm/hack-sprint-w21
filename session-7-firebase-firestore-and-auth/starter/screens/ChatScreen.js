@@ -14,10 +14,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import ChatMessage from '../components/ChatMessage';
 
 function ChatScreen() {
-    const [currentUser, setCurrentUser] = useState(0);
+    const [currentUser, setCurrentUser] = useState('0');
     const getCurrentUser = () => {
         // Post-Firebase TODO: get current user id from local storage
-        setCurrentUser(0);
+        setCurrentUser('0');
     }
     useEffect(() => {
         getCurrentUser();
@@ -25,6 +25,24 @@ function ChatScreen() {
 
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    
+    const getNewMessages = () => {
+        // TODO: Fetch messages from Firestore
+        setMessages([
+            {
+                uid: '1',
+                displayName: 'The World',
+                messageId: 1,
+                messageText: 'Hello...'                 
+            },
+            {
+                uid: '0',
+                displayName: 'Anonymous',
+                messageId: 0,
+                messageText: 'Hello, World!'             
+            }
+        ]); 
+    }
 
     const addNewMessage = async (uid, messageText) => {
         // TODO: Add new message to Firestore whenever user sends
@@ -40,26 +58,8 @@ function ChatScreen() {
                 ...prev
             ];
         }); 
-       
     }
 
-    const getNewMessages = () => {
-        // TODO: Fetch messages from Firestore
-        setMessages([
-            {
-                uid: 1,
-                displayName: 'The World',
-                messageId: 1,
-                messageText: 'Hello...'                 
-            },
-            {
-                uid: 0,
-                displayName: 'Anonymous',
-                messageId: 0,
-                messageText: 'Hello, World!'             
-            }
-        ]); 
-    }
 
     const listenForUpdates = () => {
         // TODO: Retreive new messages as they come

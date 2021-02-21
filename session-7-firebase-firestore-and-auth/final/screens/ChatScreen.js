@@ -20,7 +20,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function ChatScreen() {
     const [currentUser, setCurrentUser] = useState(0);
-
     const getCurrentUser = async () => {
         // Post-Firebase TODO: get current user id from local storage
         try {
@@ -36,7 +35,6 @@ function ChatScreen() {
             setCurrentUser(0);
         */
     }
-
     useEffect(() => {
         getCurrentUser();
     }, [])
@@ -44,41 +42,9 @@ function ChatScreen() {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
-    const addNewMessage = async (uid, messageText) => {
-        try { 
-            // Post-Firebase TODO: get display name from local storage
-            const name = await AsyncStorage.getItem('displayName');
-            const docRef = await db.collection('chatroom').add({
-                uid,
-                messageText,
-                displayName: name || 'Anonymous',
-                photoURL: null,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            console.log("Document written with ID: " + docRef.id);
-        } catch (error) {
-            console.log(error)
-        }
-
-        /* Pre-firebase implementation
-        setMessages((prev) => {
-            return [
-                {
-                    uid: CURRENT_USER,
-                    messageId: prev[0].messageId + 1,
-                    messageText,
-                    displayName: 'Miles',
-                    photoURL: null
-                },
-                ...prev
-            ];
-        }); 
-        */
-    }
-
     const getNewMessages = async () => {
         try {
-            const query = db.collection('chatroom').limit(20).orderBy('timestamp', 'desc');
+            const query = db.collection('chatroom').orderBy('timestamp', 'desc').limit(20);
             const querySnapshot = await query.get();
             
             let messageArr = [];
@@ -112,6 +78,38 @@ function ChatScreen() {
                 message: 'Hello, World!'             
             }
         ]); 
+        */
+    }
+    
+    const addNewMessage = async (uid, messageText) => {
+        try { 
+            // Post-Firebase TODO: get display name from local storage
+            const name = await AsyncStorage.getItem('displayName');
+            const docRef = await db.collection('chatroom').add({
+                uid,
+                messageText,
+                displayName: name || 'Anonymous',
+                photoURL: null,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            console.log("Document written with ID: " + docRef.id);
+        } catch (error) {
+            console.log(error)
+        }
+
+        /* Pre-firebase implementation
+        setMessages((prev) => {
+            return [
+                {
+                    uid: CURRENT_USER,
+                    messageId: prev[0].messageId + 1,
+                    messageText,
+                    displayName: 'Miles',
+                    photoURL: null
+                },
+                ...prev
+            ];
+        }); 
         */
     }
 
