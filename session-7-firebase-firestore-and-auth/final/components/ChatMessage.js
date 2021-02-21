@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
 function ChatMessage(props) {
-    const { sent, message, name, photo } = props;
+    const { sent, messageText, displayName, photoURL } = props;
     const messageStyles = [styles.message];
     if (sent) {
         messageStyles.push(styles.sent);
@@ -13,10 +13,10 @@ function ChatMessage(props) {
     return (
         <View style={{alignSelf: sent ? 'flex-end' : 'flex-start'}}>
             <View style={styles.messageWrapper}>
-                {!sent && (photo ?
+                {!sent && (photoURL ?
                         <Image
                         source={{
-                            uri: photo
+                            uri: photoURL
                         }}
                         style={styles.photo}
                         /> :
@@ -26,9 +26,9 @@ function ChatMessage(props) {
                         />)
                     }
                 <View>
-                    { !sent && <Text style={styles.nameText}>{name}</Text>}
+                    { !sent && <Text style={styles.nameText}>{displayName}</Text>}
                     <View style={messageStyles}>
-                        <Text style={sent ? styles.sent : styles.received}>{message}</Text>
+                        <Text style={sent ? styles.sent : styles.received}>{messageText}</Text>
                     </View>
                 </View>
             </View>

@@ -11,7 +11,9 @@ import {
     StyleSheet
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import firebase from 'firebase';
 
+import { db } from '../firebase/config';
 import ChatMessage from '../components/ChatMessage';
 
 function ChatScreen() {
@@ -19,31 +21,60 @@ function ChatScreen() {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
-    useEffect(() => {
-        setMessages([
-            {
-                uid: 1,
-                name: 'The World',
-                messageId: 1,
-                message: 'Hello...'                 
-            },
-            {
-                uid: 0,
-                name: 'Me',
-                messageId: 0,
-                message: 'Hello, World!'             
-            }
-        ]);
-        return () => {
-            setMessages([]);
+
+    const getNewMessages = async () => {
+        try {
+            const query = db.collection('chatroom').limit(20).orderBy('timestamp', 'desc');
+            const querySnapshot = await query.get();
+            
+            let temp = [];
+            querySnapshot.forEach((doc) => {
+                const { uid, messageText, displayName, photoURL } = doc.data();
+                temp.push({
+                    messageId: doc.id,
+                    uid,
+                    messageText,
+                    displayName,
+                    photoURL
+                });
+            });
+            setMessages(temp);
+        } catch (error) {
+            console.log(error);
         }
-    }, [])
-    
-    const handleChange = (update) => {
-        setMessage(update)
     }
 
-    const handleSend = () => {
+    useEffect(() => {
+
+        // Gets new messages every ten seconds
+        // setInterval(() => {
+        //     getNewMessages();
+        // }, 1000 * 10);
+
+    }, [])
+
+    // useEffect(() => {
+    //     setMessages([
+    //         {
+    //             uid: 1,
+    //             name: 'The World',
+    //             messageId: 1,
+    //             message: 'Hello...'                 
+    //         },
+    //         {
+    //             uid: 0,
+    //             name: 'Me',
+    //             messageId: 0,
+    //             message: 'Hello, World!'             
+    //         }
+    //     ]);
+    // }, [])
+    
+    const handleChange = (update) => {
+        setMessage(update);
+    }
+
+    const handleSend = async () => {
         setMessages((prev) => {
             return [
                 {
@@ -55,6 +86,19 @@ function ChatScreen() {
             ];
         });
         setMessage('');
+
+        try { 
+            const docRef = await db.collection('chatroom').add({
+                uid: CURRENT_USER,
+                messageText: message,
+                displayName: 'Miles Wu',
+                photoURL: null,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            console.log("Document written with ID: " + docRef.id);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -70,8 +114,9 @@ function ChatScreen() {
                             renderItem={({ item }) => {
                                 return <ChatMessage 
                                     sent={item.uid === CURRENT_USER}
-                                    name={item.name}
-                                    message={item.message}
+                                    displayName={item.displayName}
+                                    messageText={item.messageText}
+                                    photoURL={item.photoURL}
                                 />
                             }}
                             inverted={true}
