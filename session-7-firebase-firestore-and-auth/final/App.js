@@ -8,10 +8,8 @@ import ChatScreen from './screens/ChatScreen';
 import ProfileScreen from './screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
-
-export default function App() {
+function MyTab() {
   return (
-    <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen 
           name="Chat"
@@ -32,6 +30,13 @@ export default function App() {
           }}
         />
       </Tab.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyTab />
     </NavigationContainer>
   );
 }
