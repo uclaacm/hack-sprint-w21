@@ -74,7 +74,7 @@ function ProfileScreen() {
                         <Text style={styles.header}>Your Fireside Avatar</Text>
                         <View style={styles.cardContent}>
                             <Image
-                                source={require('../images/unknown-user-light.png')}
+                                source={require('../images/unknown-user-1.jpg')}
                                 style={styles.cardImg}
                                 />
                             
