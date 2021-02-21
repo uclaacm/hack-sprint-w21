@@ -7,7 +7,6 @@ import {
     Text
 } from 'react-native';
 
-import firebase from 'firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { auth } from '../firebase/config'
 
