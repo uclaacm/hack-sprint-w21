@@ -149,15 +149,7 @@ function ChatScreen() {
     }
 
     const handleSend = async () => {
-        try {
-            const id = await AsyncStorage.getItem('user');
-            if (id !== null && id !== '') {
-                console.log(id);
-                addNewMessage(id, message);
-            }
-        } catch (e) {
-            console.log(e);
-        }
+        addNewMessage(currentUser);
         setMessage('');
     }
 
