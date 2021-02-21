@@ -1,4 +1,5 @@
 import React from 'react';
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,16 +14,21 @@ const Stack = createStackNavigator();
 
 function MyStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home Screen"
-        component={HomeScreen}
+    <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home Screen"
+          component={HomeScreen}
+          />
+        <Stack.Screen 
+          name="Fireside Chats"
+          component={MyTab}
         />
-      <Stack.Screen 
-        name="Fireside Chats"
-        component={MyTab}
-      />
-    </Stack.Navigator>
+      </Stack.Navigator>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -60,3 +66,11 @@ export default function App() {
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      alignItems: 'stretch',
+      backgroundColor: '#FFF'
+  },
+});
