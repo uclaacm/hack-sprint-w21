@@ -16,6 +16,8 @@ import firebase from 'firebase';
 import { db } from '../firebase/config';
 import ChatMessage from '../components/ChatMessage';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 function ChatScreen() {
     const CURRENT_USER = 0;
     const [message, setMessage] = useState('');
@@ -128,7 +130,15 @@ function ChatScreen() {
     }
 
     const handleSend = async () => {
-        addNewMessage(CURRENT_USER, message);
+        try {
+            const id = await AsyncStorage.getItem('user');
+            if (id !== null && id !== '') {
+                console.log(id);
+                addNewMessage(id, message);
+            }
+        } catch (e) {
+            console.log(e);
+        }
         setMessage('');
     }
 
