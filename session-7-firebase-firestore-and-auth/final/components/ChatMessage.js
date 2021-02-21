@@ -11,7 +11,7 @@ function ChatMessage(props) {
     }
 
     return (
-        <View style={{alignSelf: sent ? 'flex-end' : 'flex-start'}}>
+        <View style={{alignSelf: sent ? 'flex-end' : 'flex-start', marginTop: 5, marginBottom: 5}}>
             <View style={styles.messageWrapper}>
                 {!sent && (photoURL ?
                         <Image
