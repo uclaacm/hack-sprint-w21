@@ -20,7 +20,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function ChatScreen() {
     const [currentUser, setCurrentUser] = useState(0);
+
     const getCurrentUser = async () => {
+        // Post-Firebase TODO: get current user id from local storage
         try {
             const id = await AsyncStorage.getItem('user');
             if (id !== null && id !== '') {
@@ -44,10 +46,12 @@ function ChatScreen() {
 
     const addNewMessage = async (uid, messageText) => {
         try { 
+            // Post-Firebase TODO: get display name from local storage
+            const name = await AsyncStorage.getItem('displayName');
             const docRef = await db.collection('chatroom').add({
                 uid,
                 messageText,
-                displayName: 'Anonymous',
+                displayName: name || 'Anonymous',
                 photoURL: null,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -149,7 +153,7 @@ function ChatScreen() {
     }
 
     const handleSend = async () => {
-        addNewMessage(currentUser);
+        addNewMessage(currentUser, message);
         setMessage('');
     }
 

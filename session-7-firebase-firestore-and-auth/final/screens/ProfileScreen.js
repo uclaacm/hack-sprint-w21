@@ -17,6 +17,8 @@ import { db } from '../firebase/config';
 
 function ProfileScreen() {
     const [name, setName] = useState('');
+
+    // Post-Firebase TODO: get current display name 
     const getDisplayName = async () => {
         try {
             const displayName = await AsyncStorage.getItem('displayName');
@@ -30,6 +32,7 @@ function ProfileScreen() {
         getDisplayName();
     }, []);
 
+    // Post-Authentication TODO: implement database update of previous messages
     const updateDisplayName = async (name) => {
         try {
             const id = await AsyncStorage.getItem('user');
@@ -56,7 +59,6 @@ function ProfileScreen() {
     }
 
     const handleSubmit = () => {
-        // TODO: Allow updating of display name via Firebase
         updateDisplayName(name);
     }
 

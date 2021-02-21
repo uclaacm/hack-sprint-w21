@@ -31,6 +31,7 @@ function HomeScreen({ navigation }) {
                 const uid = user.uid;
                 try {
                     await AsyncStorage.setItem('user', uid);
+                    await AsyncStorage.setItem('user', 'Anonymous');
                 } catch (e) {
                     console.log(e);
                 }
