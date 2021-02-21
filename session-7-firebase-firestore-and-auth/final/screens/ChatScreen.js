@@ -18,14 +18,14 @@ import ChatMessage from '../components/ChatMessage';
 
 function ChatScreen() {
     const CURRENT_USER = 0;
-    const [messageText, setMessage] = useState('');
+    const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
-    const addNewMessage = async (uid) => {
+    const addNewMessage = async (uid, messageText) => {
         try { 
             const docRef = await db.collection('chatroom').add({
                 uid,
-                messageText: message,
+                messageText,
                 displayName: 'Miles Wu',
                 photoURL: null,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -56,10 +56,10 @@ function ChatScreen() {
             const query = db.collection('chatroom').limit(20).orderBy('timestamp', 'desc');
             const querySnapshot = await query.get();
             
-            let temp = [];
+            let messageArr = [];
             querySnapshot.forEach((doc) => {
                 const { uid, messageText, displayName, photoURL } = doc.data();
-                temp.push({
+                messageArr.push({
                     messageId: doc.id,
                     uid,
                     messageText,
@@ -67,7 +67,7 @@ function ChatScreen() {
                     photoURL
                 });
             });
-            setMessages(temp);
+            setMessages(messageArr);
         } catch (error) {
             console.log(error);
         }
@@ -90,12 +90,37 @@ function ChatScreen() {
         */
     }
 
+    const listenForUpdates = () => {
+        // Listen for database changes in real time
+        const query = db.collection('chatroom').limit(20).orderBy('timestamp', 'desc');
+        const unsubscribe = query.onSnapshot((querySnapshot) => {
+            let messageArr = [];
+            querySnapshot.forEach((doc) => {
+                const { uid, messageText, displayName, photoURL } = doc.data();
+                messageArr.push({
+                    messageId: doc.id,
+                    uid,
+                    messageText,
+                    displayName,
+                    photoURL
+                });
+                setMessages(messageArr);
+            });
+
+        });
+
+        return unsubscribe;
+
+        /* Unsatisfactory implementation: gets new messages every ten seconds
+        setInterval(() => {
+            getNewMessages();
+        }, 1000 * 10); 
+        */
+    }
+
     useEffect(() => {
-        getNewMessages();
-        // Gets new messages every ten seconds
-        // setInterval(() => {
-        //     getNewMessages();
-        // }, 1000 * 10);
+        // getNewMessages();
+        return listenForUpdates();
     }, [])
     
     const handleChange = (update) => {
@@ -103,7 +128,7 @@ function ChatScreen() {
     }
 
     const handleSend = async () => {
-        addNewMessage(CURRENT_USER);
+        addNewMessage(CURRENT_USER, message);
         setMessage('');
     }
 
@@ -136,15 +161,15 @@ function ChatScreen() {
                         <TextInput 
                             placeholder="Aa" 
                             style={styles.messageInput} 
-                            value={messageText}
+                            value={message}
                             onChangeText={handleChange}
                         />
                         <TouchableOpacity
                             onPress={handleSend}
                             style={styles.sendBtn}
-                            disabled={messageText === ''}
+                            disabled={message === ''}
                         >
-                            <FontAwesome name="send" size={24} color={messageText ? "#ee6123" : 'gray'} />
+                            <FontAwesome name="send" size={24} color={message ? "#ee6123" : 'gray'} />
                         </TouchableOpacity>
                     </View>
                 </View>
