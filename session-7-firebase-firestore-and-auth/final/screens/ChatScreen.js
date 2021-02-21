@@ -19,7 +19,26 @@ import ChatMessage from '../components/ChatMessage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function ChatScreen() {
-    const CURRENT_USER = 0;
+    const [currentUser, setCurrentUser] = useState(0);
+    const getCurrentUser = async () => {
+        try {
+            const id = await AsyncStorage.getItem('user');
+            if (id !== null && id !== '') {
+                setCurrentUser(id);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+
+        /* Pre-Authentication implementation
+            setCurrentUser(0);
+        */
+    }
+
+    useEffect(() => {
+        getCurrentUser();
+    }, [])
+
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
@@ -28,7 +47,7 @@ function ChatScreen() {
             const docRef = await db.collection('chatroom').add({
                 uid,
                 messageText,
-                displayName: 'Miles Wu',
+                displayName: 'Anonymous',
                 photoURL: null,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -144,17 +163,13 @@ function ChatScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <KeyboardAvoidingView
-                behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-                style={styles.container}
-            >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.chatArea}>
                         <FlatList 
                             data={messages}
                             renderItem={({ item }) => {
                                 return <ChatMessage 
-                                    sent={item.uid === CURRENT_USER}
+                                    sent={item.uid === currentUser}
                                     displayName={item.displayName}
                                     messageText={item.messageText}
                                     photoURL={item.photoURL}
@@ -183,7 +198,6 @@ function ChatScreen() {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }
