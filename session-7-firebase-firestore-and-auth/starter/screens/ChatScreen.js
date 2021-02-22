@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
+import firebase from 'firebase';
+import { db } from '../firebase/config';
 import ChatMessage from '../components/ChatMessage';
 
 function ChatScreen() {
@@ -26,26 +28,41 @@ function ChatScreen() {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     
-    const getNewMessages = () => {
+    const getNewMessages = async () => {
         // TODO: Fetch messages from Firestore
-        setMessages([
-            {
-                uid: '1',
-                displayName: 'The World',
-                messageId: 1,
-                messageText: 'Hello...'                 
-            },
-            {
-                uid: '0',
-                displayName: 'Anonymous',
-                messageId: 0,
-                messageText: 'Hello, World!'             
-            }
-        ]); 
+        const query = db.collection('chatroom').orderBy('timestamp', 'desc').limit(20);
+        const querySnapshot = await query.get();
+        let messagesArr = [];
+        querySnapshot.forEach((doc) => {
+            // console.log(doc.id, ' => ', doc.data());
+            const { uid, displayName, messageText, photoURL, timestamp } = doc.data();
+            messagesArr.push({
+                uid,
+                messageId: doc.id,
+                messageText,
+                displayName,
+                photoURL,
+                timestamp
+            });
+        });
+        setMessages(messagesArr);
     }
 
     const addNewMessage = async (uid, messageText) => {
         // TODO: Add new message to Firestore whenever user sends
+        try {
+            await db.collection('chatroom').add({
+                uid,
+                messageText,
+                displayName: 'Anonymous',
+                photoURL: null,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        } catch(error) {
+            console.log(error);
+        }
+
+
         setMessages((prev) => {
             return [
                 {
@@ -63,10 +80,32 @@ function ChatScreen() {
 
     const listenForUpdates = () => {
         // TODO: Retreive new messages as they come
+        const query = db.collection('chatroom').orderBy('timestamp', 'desc').limit(20);
+        const unsubscribe = query.onSnapshot((querySnapshot) => {
+            let messagesArr = [];
+            querySnapshot.forEach((doc) => {
+                const { uid, displayName, messageText, photoURL, timestamp } = doc.data();
+                messagesArr.push({
+                    uid,
+                    messageId: doc.id,
+                    messageText,
+                    displayName,
+                    photoURL,
+                    timestamp
+                });
+            });
+            setMessages(messagesArr);
+        });
+
+        return unsubscribe;
+
+        // setInterval(() => {
+        //     getNewMessages();
+        // }, 1000 * 10)
     }
 
     useEffect(() => {
-        getNewMessages();
+        return listenForUpdates();
     }, [])
     
     const handleChange = (update) => {
