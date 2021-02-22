@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
     SafeAreaView,
-    KeyboardAvoidingView,
     Keyboard,
     FlatList,
     View,
@@ -11,45 +10,49 @@ import {
     StyleSheet
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import firebase from 'firebase';
 
-import { db } from '../firebase/config';
 import ChatMessage from '../components/ChatMessage';
+// Import Firebase
+import firebase from 'firebase';
+// Import database
+import { db } from '../firebase/config';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-function ChatScreen() {
-    const [currentUser, setCurrentUser] = useState(0);
-    const getCurrentUser = async () => {
-        // Post-Firebase TODO: get current user id from local storage
-        try {
-            const id = await AsyncStorage.getItem('user');
-            if (id !== null && id !== '') {
-                setCurrentUser(id);
-            }
-        } catch (e) {
-            console.log(e);
-        }
-
-        /* Pre-Authentication implementation
-            setCurrentUser(0);
-        */
-    }
+function ChatScreen({ route }) {
+    const [currentUser, setCurrentUser] = useState('0');
     useEffect(() => {
-        getCurrentUser();
-    }, [])
-
+        setCurrentUser(route.params.uid);
+    }, []);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
+    const addNewMessage = async (uid, messageText) => {
+        try { 
+            // Add new document with auto-generated ID (returns a document reference)
+            const docRef = await db.collection('chatroom').add({
+                uid,
+                messageText,
+                displayName: route.params.displayName || 'Anonymous',
+                photoURL: null,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            console.log("Document written with ID: " + docRef.id);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const getNewMessages = async () => {
         try {
+            // Create and execute query for latest 20 messages
             const query = db.collection('chatroom').orderBy('timestamp', 'desc').limit(20);
             const querySnapshot = await query.get();
             
+            // Push each result doc's data to temporary message array
             let messageArr = [];
             querySnapshot.forEach((doc) => {
                 const { uid, messageText, displayName, photoURL } = doc.data();
+
+                // This is JavaScript shorthand, if the property and the variable you are using have the same name you can just use the variable name
                 messageArr.push({
                     messageId: doc.id,
                     uid,
@@ -58,64 +61,19 @@ function ChatScreen() {
                     photoURL
                 });
             });
+
+            // After processing all documents, set state
             setMessages(messageArr);
         } catch (error) {
             console.log(error);
         }
-
-        /* Pre-firebase implementation
-        setMessages([
-            {
-                uid: 1,
-                name: 'The World',
-                messageId: 1,
-                message: 'Hello...'                 
-            },
-            {
-                uid: 0,
-                name: 'Me',
-                messageId: 0,
-                message: 'Hello, World!'             
-            }
-        ]); 
-        */
-    }
-    
-    const addNewMessage = async (uid, messageText) => {
-        try { 
-            // Post-Firebase TODO: get display name from local storage
-            const name = await AsyncStorage.getItem('displayName');
-            const docRef = await db.collection('chatroom').add({
-                uid,
-                messageText,
-                displayName: name || 'Anonymous',
-                photoURL: null,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            console.log("Document written with ID: " + docRef.id);
-        } catch (error) {
-            console.log(error)
-        }
-
-        /* Pre-firebase implementation
-        setMessages((prev) => {
-            return [
-                {
-                    uid: CURRENT_USER,
-                    messageId: prev[0].messageId + 1,
-                    messageText,
-                    displayName: 'Miles',
-                    photoURL: null
-                },
-                ...prev
-            ];
-        }); 
-        */
     }
 
     const listenForUpdates = () => {
         // Listen for database changes in real time
         const query = db.collection('chatroom').limit(20).orderBy('timestamp', 'desc');
+
+        // query.onSnapshot creates a listerner that runs a function whenever changes occur in database
         const unsubscribe = query.onSnapshot((querySnapshot) => {
             let messageArr = [];
             querySnapshot.forEach((doc) => {
@@ -150,7 +108,7 @@ function ChatScreen() {
         setMessage(update);
     }
 
-    const handleSend = async () => {
+    const handleSend = () => {
         addNewMessage(currentUser, message);
         setMessage('');
     }

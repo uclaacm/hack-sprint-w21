@@ -1,74 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
     SafeAreaView,
-    View,
+    Keyboard,
+    TextInput,
     Image,
     TouchableOpacity,
+    TouchableWithoutFeedback,
     StyleSheet,
     Text
 } from 'react-native';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { auth } from '../firebase/config'
+import UUID from '../utils/uuid';
 
 function HomeScreen({ navigation }) {
-    useEffect(() => {
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                const uid = user.uid;
-                try {
-                    await AsyncStorage.setItem('user', uid);
-                    await AsyncStorage.setItem('user', 'Anonymous');
-                } catch (e) {
-                    console.log(e);
-                }
-                navigation.navigate('Fireside Chats');
-            } 
-        })
-    }, [])
-
-    const handleLogin = async () => {
-        try {
-            await auth.signInAnonymously();
-        } catch (e) {
-            console.log(e); 
-        }
-
-        /* Pre-Auth
-        navigation.navigate('Fireside Chats');
-        */
+    const [displayName, setDisplayName] = useState('');
+    const handlePress = () => {
+        navigation.navigate('Fireside', {
+            displayName,
+            uid: UUID()
+        });
     }
 
-
-    const handleLogout = async () => {
-        try {
-            await auth.signOut();
-            await AsyncStorage.setItem('user', '');
-        } catch (e) {
-            console.log(e);
-        }
+    const handleChange = (update) => {
+        if (update.length <= 20)
+            setDisplayName(update);
     }
+
     return (
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Fireside Chats</Text>
-            <Image 
-                source={require('../images/fire-icon.png')}
-                style={styles.image}
-            />
-            <TouchableOpacity 
-                onPress={handleLogin}
-                style={styles.btn}
-            >
-                <Text style={styles.btnText}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-                onPress={handleLogout}
-                style={styles.btn}
-            >
-                <Text style={styles.btnText}>Logout</Text>
-            </TouchableOpacity>
-        
-        </SafeAreaView>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <SafeAreaView style={styles.container}>
+                <Text style={styles.title}>Fireside Chats</Text>
+                <Image 
+                    source={require('../images/fire-icon.png')}
+                    style={styles.image}
+                />
+                <TextInput
+                    style={styles.nameInput}
+                    placeholder='Set Display Name'
+                    value={displayName}
+                    onChangeText={handleChange}
+                />
+                <TouchableOpacity 
+                    onPress={handlePress}
+                    style={styles.btn}
+                    disabled={displayName === ''}
+                >
+                    <Text style={{color: displayName === '' ? 'gray' : '#ffa611'}}>Start Chatting</Text>
+                </TouchableOpacity>
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
     )
 }
 
@@ -89,7 +68,7 @@ const styles = StyleSheet.create({
         height: 300
     }, 
     btn: {
-        margin: 5,
+        marginTop: 60,
         paddingRight: 30,
         paddingLeft: 30,
         paddingTop: 15,
@@ -97,8 +76,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'white'
     },
-    btnText: {
-        color: '#ffa611'
+    nameInput: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 10,
+        minWidth: 100,
+        maxWidth: 200,
+        textAlign: 'center'
     }
 });
 

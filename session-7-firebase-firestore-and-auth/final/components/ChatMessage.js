@@ -21,7 +21,7 @@ function ChatMessage(props) {
                         style={styles.photo}
                         /> :
                         <Image 
-                            source={require('../images/unknown-user-1.jpg')}
+                            source={require('../images/unknown-user-3.jpg')}
                             style={styles.photo}
                         />)
                     }
