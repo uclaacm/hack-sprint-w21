@@ -8,5 +8,3 @@ let firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // TODO: Export Firestore
-
-// TODO: Export Auth

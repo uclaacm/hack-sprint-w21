@@ -12,47 +12,26 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 
 import ChatMessage from '../components/ChatMessage';
+// TODO: Import firebase
+// TODO: Import database
 
-function ChatScreen() {
+function ChatScreen({ route }) {
     const [currentUser, setCurrentUser] = useState('0');
-    const getCurrentUser = () => {
-        // Post-Firebase TODO: get current user id from local storage
-        setCurrentUser('0');
-    }
     useEffect(() => {
-        getCurrentUser();
-    }, [])
-
+        setCurrentUser(route.params.uid);
+    }, []);
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
-    
-    const getNewMessages = () => {
-        // TODO: Fetch messages from Firestore
-        setMessages([
-            {
-                uid: '1',
-                displayName: 'The World',
-                messageId: 1,
-                messageText: 'Hello...'                 
-            },
-            {
-                uid: '0',
-                displayName: 'Anonymous',
-                messageId: 0,
-                messageText: 'Hello, World!'             
-            }
-        ]); 
-    }
 
-    const addNewMessage = async (uid, messageText) => {
-        // TODO: Add new message to Firestore whenever user sends
+    const addNewMessage = (uid, messageText) => {
+        // TODO: Add new message to Firestore whenever user sends one
         setMessages((prev) => {
             return [
                 {
                     uid,
                     messageId: prev[0] ? prev[0].messageId + 1 : 0,
                     messageText,
-                    displayName: 'Anonymous',
+                    displayName: route.params.displayName || 'Anonymous',
                     photoURL: null
                 },
                 ...prev
@@ -60,6 +39,24 @@ function ChatScreen() {
         }); 
     }
 
+    const getNewMessages = () => {
+        // TODO: Fetch messages from Firestore
+        setMessages([
+            {
+                uid: '1',
+                displayName: 'The World',
+                messageId: 1,
+                messageText: 'Hello...',
+                photoURL: 'https://images.pexels.com/photos/87651/earth-blue-planet-globe-planet-87651.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'                
+            },
+            {
+                uid: route.params.uid,
+                displayName: 'Anonymous',
+                messageId: 0,
+                messageText: 'Hello, World!'             
+            }
+        ]); 
+    }
 
     const listenForUpdates = () => {
         // TODO: Retreive new messages as they come
