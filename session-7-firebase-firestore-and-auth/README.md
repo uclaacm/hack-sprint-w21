@@ -35,7 +35,7 @@
     -   [Executing Queries](#executing-queries)
     -   [Modifying Database](#modifying-the-database)
     -   [Listening for Realtime Updates!](#listening-for-realtime-updates)
--   [FiresideChats Demo App!](#firesidechats-demo-app)
+-   [Fireside Chats Demo App!](#fireside-chats-demo-app)
 -   [Authentication](#bonus-authentication)
     -   [Firebase Auth](#authentication-on-firebase)
     -   [Auth Demo](#auth-demo)
@@ -475,6 +475,90 @@ query.onSnapshot((querySnapshot) => {
 This part of the code is actually what sets up the event listener (the thing that reacts to changes in the database). Whenever our query results change (meaning something in the Firestore database related to our query changed), the funciton we pass in to `onSnapshot` is going to be run. In this function, we are given a snapshot of the database which we can go through like when we used `get` to execute a query.
 
 After this listener is set up, it will continue listening for updates to the database until we call the `unsubscribe` function it returns. Make sure to do this somewhere, otherwise your app will continue to listen for updates forever until it is closed.
+
+## Fireside Chats Demo App
+
+Let's get working on our demo app for this workshop. Introducing... Fireside Chats! A cozy chatting hub for you to sit back by the fire, relax, and chat with people 🥰
+
+I've already pre-built most of the UI and logic for this app, but we're missing one thing... we can't actually talk to other people! Let's work through this together so we can integrate Firebase/Firestore and make sure our app allows communication across multiple devices!
+
+First, go ahead and create a Firebase project using the steps in the [Setting Up Firebase](#setting-up-firebase) section. Once you'e done that, take a look in the [starter/screens/ChatScreen.js](./starter/screens/ChatScreen.js) file. Just as an overview, the UI is split up into a chat area and an input area. The chat area uses a `FlatList` to render messages on the screen (_ahem_ not ScrollView _ahem_) and the `TextInput` uses a `message` state variable to store the message the user wants to send.
+
+Aside from this, notice that there is a `messages` state variable, which is what we'll use to store and update the messages that show up on screen. Right now, there are a couple of functions that either have a trivial implementation or no implementation at all.
+
+Let's first go ahead and let our users send messages. Replace the current `addNewMessage` function with the following implementation:
+
+```js
+try {
+	// Add new document with auto-generated ID (returns a document reference)
+	const docRef = await db.collection('chatroom').add({
+		uid,
+		messageText,
+		displayName: route.params.displayName || 'Anonymous',
+		photoURL: null,
+		timestamp: firebase.firestore.FieldValue.serverTimestamp()
+	});
+	console.log('Document written with ID: ' + docRef.id);
+} catch (error) {
+	console.log(error);
+}
+```
+
+We can see in this implementation we're making use of the ability to create documents with auto-generated IDs. The `route.params.displayName` is the data passed from the HomeScreen (go back to session 5 if you don't remember this). The other notable thing here is the `firebase.firestore.FieldValue.serverTimestamp()` line. This is just Firebase's provided way of letting you create a timestamp object compatible with Firestore. Now we should be able to send messages and have them appear in our Firebase console.
+
+Next, let's go ahead and let our users receive messages in real time! We can do this by replacing the `listenForUpdates` function with the following implementation:
+
+```js
+// Listen for database changes in real time
+const query = db.collection('chatroom').limit(20).orderBy('timestamp', 'desc');
+
+// query.onSnapshot creates a listerner that runs a function whenever changes occur in database
+const unsubscribe = query.onSnapshot((querySnapshot) => {
+	let messageArr = [];
+	querySnapshot.forEach((doc) => {
+		const { uid, messageText, displayName, photoURL } = doc.data();
+		messageArr.push({
+			messageId: doc.id,
+			uid,
+			messageText,
+			displayName,
+			photoURL
+		});
+		setMessages(messageArr);
+	});
+});
+
+return unsubscribe;
+```
+
+Here, we can see we start off by building our desired query:
+
+```js
+const query = db.collection('chatroom').limit(20).orderBy('timestamp', 'desc');
+```
+
+Then we create an event listener using `query.onSnapshot()` which waits for updates to our query's snapshot (the result documents). This event listener takes a function which we define as
+
+```js
+(querySnapshot) => {
+	let messageArr = [];
+	querySnapshot.forEach((doc) => {
+		const { uid, messageText, displayName, photoURL } = doc.data();
+		messageArr.push({
+			messageId: doc.id,
+			uid,
+			messageText,
+			displayName,
+			photoURL
+		});
+		setMessages(messageArr);
+	}
+}
+```
+
+This function takes the querySnapshot, goes through each document in the snapshot and adds the document's data to a temporary array. After all the documents have been processed, we use `setMessages(messageArr)` to update our state with the newly retreived messages.
+
+Congrats, we now have a fully functional chat application with the bare minimum features: sending and receiving messages in real time! Woo!
 
 ## Bonus: Authentication
 
