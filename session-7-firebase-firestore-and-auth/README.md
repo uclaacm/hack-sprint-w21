@@ -8,13 +8,39 @@
 
 ## Resources
 
--   <a href="https://tinyurl.com/hacksprint21-s7-slides" target="_blank">Slides</a>
+-   <a href="https://tinyurl.com/hacksprint21-s7-slides" target="_blank">Workshop Slides</a>
 -   <a href="https://members.uclaacm.com/login" target="_blank">ACM Membership Attendance Portal</a>
 -   <a href="https://docs.expo.io/get-started/installation/" target="_blank">Expo Installation</a>
 -   <a href="https://classic.yarnpkg.com/en/" target="_blank">Yarn Installation</a>
 -   <a href="https://code.visualstudio.com/download" target="_blank">Text Editor (VS Code)</a>
+-   <a href="https://firebase.google.com/docs/firestore/quickstart">Firestore Docs</a>
 
 ## Running the Demo App
+
+Below are instructions so you can run our examples on your own time. As always, we discourage coding along during the workshop and would rather you absorb all the information properly. You can always look back at this README or run the demo project on your own later.
+
+To run our demo app for yourself, go ahead and download the [starter.zip](./starter.zip) or [final.zip](./final.zip) file and unzip it in the directory of your choosing.
+
+Go to the `firebase/config.js` file and **make sure you replace the empty `firebaseConfig` with your own Firebase project configuration.** You can get this from the [Firebase console](https://console.firebase.google.com/) and following the steps in [Setting up Firebase](#setting-up-firebase).
+
+Open the project folder in VSCode and open a terminal, then run as follows.
+
+For starter.zip (pre-firebase code):
+
+```
+# make sure you are in the root directory of the project
+yarn
+yarn add firebase
+expo start
+```
+
+For final.zip (post-firebase code):
+
+```
+# make sure you are in the root directory of the project
+yarn
+expo start
+```
 
 ## What we'll be learning today
 
